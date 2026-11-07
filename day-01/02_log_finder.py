@@ -11,3 +11,13 @@ def main():
     if not keyword:
         print("Error: keyword must not be empty.")
         return 2
+
+    matches = 0
+    try:
+        path = Path(sys.argv[1]).expanduser()
+        if not path.is_file():
+            print(f"Error: File not found: {Path}")
+            return 1
+        with path.open("r", encoding="utf-8") as handle:
+            for line_number, line in enumerate(handle, start=1):
+                if keyword in line:

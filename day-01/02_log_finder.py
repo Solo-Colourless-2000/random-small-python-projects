@@ -21,3 +21,16 @@ def main():
         with path.open("r", encoding="utf-8") as handle:
             for line_number, line in enumerate(handle, start=1):
                 if keyword in line:
+                    clean_line = line.rstrip("\n")
+                    print(f"{line_number}: {clean_line}")
+                    matches += 1
+    except (OSError, UnicodeError, RuntimeError) as error:
+            print(f"Error: Cannot read log: {error}")
+            return 1
+
+    print(f"Matches: {matches}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

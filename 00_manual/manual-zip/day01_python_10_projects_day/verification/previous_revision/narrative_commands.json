@@ -1,0 +1,217 @@
+[
+  {
+    "chapter": 1,
+    "command": "python3 practice/01_file_counter.py samples/downloads",
+    "status": 0
+  },
+  {
+    "chapter": 1,
+    "command": "python3 practice/01_file_counter.py samples/not_found",
+    "status": 1
+  },
+  {
+    "chapter": 1,
+    "command": "python3 practice/01_file_counter.py samples/downloads",
+    "status": 0
+  },
+  {
+    "chapter": 1,
+    "command": "printf \"test\\n\" > practice/demo.TXT\npython3 practice/01_file_counter.py practice",
+    "status": 0
+  },
+  {
+    "chapter": 2,
+    "command": "python3 practice/02_log_finder.py samples/logs/sample.log ERROR",
+    "status": 0
+  },
+  {
+    "chapter": 2,
+    "command": "python3 practice/02_log_finder.py samples/logs/sample.log WARN",
+    "status": 0
+  },
+  {
+    "chapter": 2,
+    "command": "python3 practice/02_log_finder.py samples/logs/sample.log ERROR",
+    "status": 0
+  },
+  {
+    "chapter": 2,
+    "command": "python3 practice/02_log_finder.py samples/logs/sample.log ERROR\npython3 practice/02_log_finder.py samples/logs/sample.log error",
+    "status": 0
+  },
+  {
+    "chapter": 3,
+    "command": "python3 practice/03_password_gen.py 16",
+    "status": 0
+  },
+  {
+    "chapter": 3,
+    "command": "python3 practice/03_password_gen.py abc",
+    "status": 2
+  },
+  {
+    "chapter": 3,
+    "command": "python3 practice/03_password_gen.py 16",
+    "status": 0
+  },
+  {
+    "chapter": 3,
+    "command": "python3 practice/03_password_gen.py 12\npython3 practice/03_password_gen.py 11",
+    "status": 2
+  },
+  {
+    "chapter": 4,
+    "command": "python3 practice/04_hash_file.py samples/downloads/readme.txt",
+    "status": 0
+  },
+  {
+    "chapter": 4,
+    "command": "sha256sum samples/downloads/readme.txt",
+    "status": 0
+  },
+  {
+    "chapter": 4,
+    "command": "python3 practice/04_hash_file.py samples/downloads/readme.txt",
+    "status": 0
+  },
+  {
+    "chapter": 4,
+    "command": "python3 practice/04_hash_file.py samples/downloads/readme.txt\nsha256sum samples/downloads/readme.txt",
+    "status": 0
+  },
+  {
+    "chapter": 5,
+    "command": "cp samples/downloads/readme.txt practice/permission_demo.txt",
+    "status": 0
+  },
+  {
+    "chapter": 5,
+    "command": "chmod 666 practice/permission_demo.txt && python3 practice/05_permission_check.py practice/permission_demo.txt",
+    "status": 0
+  },
+  {
+    "chapter": 5,
+    "command": "chmod 644 practice/permission_demo.txt && python3 practice/05_permission_check.py practice/permission_demo.txt",
+    "status": 0
+  },
+  {
+    "chapter": 5,
+    "command": "chmod 666 practice/permission_demo.txt && python3 practice/05_permission_check.py practice/permission_demo.txt",
+    "status": 0
+  },
+  {
+    "chapter": 5,
+    "command": "chmod 644 practice/permission_demo.txt\n",
+    "status": 0
+  },
+  {
+    "chapter": 5,
+    "command": "cp samples/downloads/readme.txt practice/permission_extra.txt\nchmod 666 practice/permission_extra.txt\npython3 practice/05_permission_check.py practice/permission_extra.txt",
+    "status": 0
+  },
+  {
+    "chapter": 5,
+    "command": "chmod 644 practice/permission_extra.txt\n",
+    "status": 0
+  },
+  {
+    "chapter": 6,
+    "command": "python3 practice/06_ip_checker.py 192.168.1.20 192.168.1.0/24",
+    "status": 0
+  },
+  {
+    "chapter": 6,
+    "command": "python3 practice/06_ip_checker.py 192.168.2.20 192.168.1.0/24",
+    "status": 0
+  },
+  {
+    "chapter": 6,
+    "command": "python3 practice/06_ip_checker.py 2001:db8::1 2001:db8::/32",
+    "status": 0
+  },
+  {
+    "chapter": 6,
+    "command": "python3 practice/06_ip_checker.py 192.168.1.20 192.168.1.0/24",
+    "status": 0
+  },
+  {
+    "chapter": 6,
+    "command": "python3 practice/06_ip_checker.py 192.168.1.20 192.168.1.0/24\npython3 practice/06_ip_checker.py 192.168.1.20 192.168.1.7/24",
+    "status": 2
+  },
+  {
+    "chapter": 7,
+    "command": "python3 practice/07_url_analyzer.py \"https://example.com:8443/login?id=10#head\"",
+    "status": 0
+  },
+  {
+    "chapter": 7,
+    "command": "python3 practice/07_url_analyzer.py \"https://example.com\"",
+    "status": 0
+  },
+  {
+    "chapter": 7,
+    "command": "python3 practice/07_url_analyzer.py \"https://example.com:8443/login?id=10#head\"",
+    "status": 0
+  },
+  {
+    "chapter": 7,
+    "command": "python3 practice/07_url_analyzer.py \"https://example.invalid/abc?x=1\"",
+    "status": 0
+  },
+  {
+    "chapter": 8,
+    "command": "cat samples/csv/events.csv",
+    "status": 0
+  },
+  {
+    "chapter": 8,
+    "command": "python3 practice/08_csv_analyzer.py samples/csv/events.csv",
+    "status": 0
+  },
+  {
+    "chapter": 8,
+    "command": "python3 practice/08_csv_analyzer.py samples/csv/events.csv",
+    "status": 0
+  },
+  {
+    "chapter": 8,
+    "command": "cat samples/csv/events_edge_cases.csv\npython3 practice/08_csv_analyzer.py samples/csv/events_edge_cases.csv",
+    "status": 0
+  },
+  {
+    "chapter": 9,
+    "command": "python3 practice/09_system_info.py practice/system_info.json",
+    "status": 0
+  },
+  {
+    "chapter": 9,
+    "command": "cat practice/system_info.json",
+    "status": 0
+  },
+  {
+    "chapter": 9,
+    "command": "python3 practice/09_system_info.py practice/system_info.json",
+    "status": 1
+  },
+  {
+    "chapter": 9,
+    "command": "python3 practice/09_system_info.py practice/environment_check.json\ncat practice/environment_check.json\npython3 practice/09_system_info.py practice/environment_check.json",
+    "status": 1
+  },
+  {
+    "chapter": 10,
+    "command": "python3 practice/10_directory_backup.py samples/documents practice/documents_backup.zip",
+    "status": 0
+  },
+  {
+    "chapter": 10,
+    "command": "python3 -m zipfile -l practice/documents_backup.zip",
+    "status": 0
+  },
+  {
+    "chapter": 10,
+    "command": "python3 practice/10_directory_backup.py samples/documents practice/experiment_backup.zip\npython3 -m zipfile -l practice/experiment_backup.zip",
+    "status": 0
+  }
+]

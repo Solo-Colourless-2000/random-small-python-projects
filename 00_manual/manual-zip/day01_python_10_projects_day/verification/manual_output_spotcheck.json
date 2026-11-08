@@ -1,0 +1,49 @@
+{
+  "pass_2": "Runtime crosscheck of manual examples against included completed programs",
+  "results": {
+    "01_file_counter.py": {
+      "exit_code": 0,
+      "matches_manual_output": true
+    },
+    "02_log_finder.py": {
+      "exit_code": 0,
+      "matches_manual_output": true
+    },
+    "06_ip_checker.py": {
+      "exit_code": 0,
+      "matches_manual_output": true
+    },
+    "07_url_analyzer.py": {
+      "exit_code": 0,
+      "matches_manual_output": true
+    },
+    "08_csv_analyzer.py": {
+      "exit_code": 0,
+      "matches_manual_output": true
+    },
+    "05_permission_check.py": {
+      "exit_code": 0,
+      "matches_manual_output": true
+    },
+    "09_system_info.py": {
+      "exit_code": 0,
+      "json_created": true,
+      "matches_manual_format": true
+    },
+    "10_directory_backup.py": {
+      "exit_code": 0,
+      "zip_created": true,
+      "contains_expected_summary": true,
+      "zip_crc_ok": true
+    },
+    "03_password_gen.py": {
+      "exit_code": 0,
+      "password_length_16": true
+    },
+    "04_hash_file.py": {
+      "exit_code": 0,
+      "sha256_matches": true
+    }
+  },
+  "result": "PASS"
+}

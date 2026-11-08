@@ -1,0 +1,111 @@
+{
+  "ids": 112,
+  "internal_links": 197,
+  "duplicate_ids": [],
+  "missing_links": [],
+  "external_assets": [],
+  "unlabelled_inputs": [],
+  "files": [
+    {
+      "file": "01_file_counter.py",
+      "chapter": true,
+      "appendix": true,
+      "steps": true,
+      "hash": true,
+      "explanation_code": true,
+      "steps_count": 4,
+      "source_lines": 38
+    },
+    {
+      "file": "02_log_finder.py",
+      "chapter": true,
+      "appendix": true,
+      "steps": true,
+      "hash": true,
+      "explanation_code": true,
+      "steps_count": 4,
+      "source_lines": 36
+    },
+    {
+      "file": "03_password_gen.py",
+      "chapter": true,
+      "appendix": true,
+      "steps": true,
+      "hash": true,
+      "explanation_code": true,
+      "steps_count": 4,
+      "source_lines": 31
+    },
+    {
+      "file": "04_hash_file.py",
+      "chapter": true,
+      "appendix": true,
+      "steps": true,
+      "hash": true,
+      "explanation_code": true,
+      "steps_count": 4,
+      "source_lines": 33
+    },
+    {
+      "file": "05_permission_check.py",
+      "chapter": true,
+      "appendix": true,
+      "steps": true,
+      "hash": true,
+      "explanation_code": true,
+      "steps_count": 4,
+      "source_lines": 35
+    },
+    {
+      "file": "06_ip_checker.py",
+      "chapter": true,
+      "appendix": true,
+      "steps": true,
+      "hash": true,
+      "explanation_code": true,
+      "steps_count": 4,
+      "source_lines": 29
+    },
+    {
+      "file": "07_url_analyzer.py",
+      "chapter": true,
+      "appendix": true,
+      "steps": true,
+      "hash": true,
+      "explanation_code": true,
+      "steps_count": 4,
+      "source_lines": 33
+    },
+    {
+      "file": "08_csv_analyzer.py",
+      "chapter": true,
+      "appendix": true,
+      "steps": true,
+      "hash": true,
+      "explanation_code": true,
+      "steps_count": 4,
+      "source_lines": 53
+    },
+    {
+      "file": "09_system_info.py",
+      "chapter": true,
+      "appendix": true,
+      "steps": true,
+      "hash": true,
+      "explanation_code": true,
+      "steps_count": 4,
+      "source_lines": 36
+    },
+    {
+      "file": "10_directory_backup.py",
+      "chapter": true,
+      "appendix": true,
+      "steps": true,
+      "hash": true,
+      "explanation_code": true,
+      "steps_count": 5,
+      "source_lines": 75
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,66 @@
+{
+  "manual": "/workspace/manual_revision/python_10_projects_day/manual.html",
+  "transport": "local HTTP (file:// disabled by managed browser policy)",
+  "initial_chapter": "home",
+  "section_count": 20,
+  "overflow": {
+    "1440": {
+      "chapters": 20,
+      "failures": []
+    },
+    "390": {
+      "chapters": 20,
+      "failures": []
+    },
+    "320": {
+      "chapters": 20,
+      "failures": []
+    }
+  },
+  "native_clipboard_sample": true,
+  "copy": {
+    "count": 159,
+    "captured": 159,
+    "failures": []
+  },
+  "search_chapter_title": {
+    "status": "7箇所が一致。本文と完成ソースの結果から該当箇所へ移動できます。",
+    "results": 7
+  },
+  "search_Counter": {
+    "status": "10箇所が一致。本文と完成ソースの結果から該当箇所へ移動できます。",
+    "results": 10
+  },
+  "search_outside_lesson": {
+    "query": "拡張子はファイルの種類の証明ではありません",
+    "status": "1箇所が一致。本文と完成ソースの結果から該当箇所へ移動できます。",
+    "results": 1
+  },
+  "search_clear": true,
+  "search_shortcut": true,
+  "scale": {
+    "before": "16px",
+    "after": "16.8px"
+  },
+  "wrap": true,
+  "source_jump": {
+    "chapter": "appendix-a",
+    "open": true,
+    "highlight": 1
+  },
+  "source_return": "checkpoint-1",
+  "checkbox_persistence": true,
+  "mobile_menu": {
+    "visible": true,
+    "expanded": "true"
+  },
+  "mobile_menu_escape": true,
+  "print_handlers": {
+    "allOpen": true,
+    "restored": true,
+    "count": 101
+  },
+  "print_visible_chapters": 20,
+  "page_errors": [],
+  "nojs_visible_chapters": 20
+}

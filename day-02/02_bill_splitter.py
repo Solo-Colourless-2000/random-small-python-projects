@@ -1,0 +1,2 @@
+"""Fair Bill Splitter."""
+

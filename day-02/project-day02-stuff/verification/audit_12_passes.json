@@ -1,0 +1,257 @@
+[
+  {
+    "pass_number": 1,
+    "title": "構成と1日の分量",
+    "scope": "完成10本・本文20章・学習時間",
+    "status": "passed",
+    "seconds": 0.0,
+    "evidence": {
+      "projects": 10,
+      "basic_minutes": 220,
+      "sections": 20
+    }
+  },
+  {
+    "pass_number": 2,
+    "title": "構文とコードの言語",
+    "scope": "全Pythonソース・全テストソース",
+    "status": "passed",
+    "seconds": 0.005,
+    "evidence": {
+      "ascii_and_parse_checked": [
+        "projects/06_flashcard_quiz.py",
+        "projects/10_svg_tiles.py",
+        "projects/04_date_countdown.py",
+        "projects/02_bill_splitter.py",
+        "projects/07_text_wrapper.py",
+        "projects/08_score_bars.py",
+        "projects/01_temperature.py",
+        "projects/05_study_planner.py",
+        "projects/03_recipe_scaler.py",
+        "projects/09_treasure_hunt.py",
+        "tests/test_revision.py",
+        "tests/test_projects.py"
+      ]
+    }
+  },
+  {
+    "pass_number": 3,
+    "title": "行番号・逐行解説・工程の連結",
+    "scope": "全10作品の全非空行",
+    "status": "passed",
+    "seconds": 0.0,
+    "evidence": {
+      "explained_nonblank_lines": 244,
+      "four_steps_per_project": true
+    }
+  },
+  {
+    "pass_number": 4,
+    "title": "変換式・端数・倍率",
+    "scope": "気温・割り勘・レシピ",
+    "status": "passed",
+    "seconds": 0.099,
+    "evidence": {
+      "test_methods": [
+        "test_temperature_boundaries_and_rounding",
+        "test_bill_distribution_invariants",
+        "test_recipe_all_servings"
+      ],
+      "result": "test_temperature_boundaries_and_rounding (test_revision.RevisionCases.test_temperature_boundaries_and_rounding) ... ok\ntest_bill_distribution_invariants (test_revision.RevisionCases.test_bill_distribution_invariants) ... ok\ntest_recipe_all_servings (test_revision.RevisionCases.test_recipe_all_servings) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.008s\n\nOK\n"
+    }
+  },
+  {
+    "pass_number": 5,
+    "title": "中断・例外・異常入力",
+    "scope": "気温のEOF/Ctrl+Cと全作品の既存異常系",
+    "status": "passed",
+    "seconds": 0.097,
+    "evidence": {
+      "test_methods": [
+        "test_temperature_interrupt"
+      ],
+      "result": "test_temperature_interrupt (test_revision.RevisionCases.test_temperature_interrupt) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n"
+    }
+  },
+  {
+    "pass_number": 6,
+    "title": "日付・うるう年・基準日",
+    "scope": "日付計算",
+    "status": "passed",
+    "seconds": 0.093,
+    "evidence": {
+      "test_methods": [
+        "test_dates_valid_and_invalid"
+      ],
+      "result": "test_dates_valid_and_invalid (test_revision.RevisionCases.test_dates_valid_and_invalid) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n"
+    }
+  },
+  {
+    "pass_number": 7,
+    "title": "時刻・休憩回数・日またぎ",
+    "scope": "時間割192組",
+    "status": "passed",
+    "seconds": 0.113,
+    "evidence": {
+      "test_methods": [
+        "test_planner_by_integer_minutes"
+      ],
+      "result": "test_planner_by_integer_minutes (test_revision.RevisionCases.test_planner_by_integer_minutes) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.013s\n\nOK\n"
+    }
+  },
+  {
+    "pass_number": 8,
+    "title": "対話・正規化・ゲーム回数",
+    "scope": "クイズと全25座標",
+    "status": "passed",
+    "seconds": 0.113,
+    "evidence": {
+      "test_methods": [
+        "test_quiz_score_and_normalization",
+        "test_treasure_all_coordinates"
+      ],
+      "result": "test_quiz_score_and_normalization (test_revision.RevisionCases.test_quiz_score_and_normalization) ... ok\ntest_treasure_all_coordinates (test_revision.RevisionCases.test_treasure_all_coordinates) ... ok\n\n----------------------------------------------------------------------\nRan 2 tests in 0.001s\n\nOK\n"
+    }
+  },
+  {
+    "pass_number": 9,
+    "title": "文字数・幅・棒・平均",
+    "scope": "文章整形と点数0〜100",
+    "status": "passed",
+    "seconds": 0.099,
+    "evidence": {
+      "test_methods": [
+        "test_wrap_whitespace_and_width",
+        "test_bars_each_score"
+      ],
+      "result": "test_wrap_whitespace_and_width (test_revision.RevisionCases.test_wrap_whitespace_and_width) ... ok\ntest_bars_each_score (test_revision.RevisionCases.test_bars_each_score) ... ok\n\n----------------------------------------------------------------------\nRan 2 tests in 0.002s\n\nOK\n"
+    }
+  },
+  {
+    "pass_number": 10,
+    "title": "SVGの全セルと保存の保護",
+    "scope": "16タイル・同名出力",
+    "status": "passed",
+    "seconds": 0.095,
+    "evidence": {
+      "test_methods": [
+        "test_svg_all_cells_and_preservation"
+      ],
+      "result": "test_svg_all_cells_and_preservation (test_revision.RevisionCases.test_svg_all_cells_and_preservation) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n"
+    }
+  },
+  {
+    "pass_number": 11,
+    "title": "用語・説明・操作・読書機能",
+    "scope": "全10章の増補・vim・ブラウザー・HTML整合性",
+    "status": "passed",
+    "seconds": 0.002,
+    "evidence": {
+      "narrative": {
+        "worked_tables": 10,
+        "expanded_concept_panels": 10,
+        "vim_only": true,
+        "reference_date_wording": true
+      },
+      "browser_integrity": {
+        "browser": {
+          "browser": "Chromium",
+          "mode": "headless; loopback HTTP; standalone assets; file URLs blocked by environment browser policy",
+          "desktop_viewport": [
+            1440,
+            1000
+          ],
+          "checks": {
+            "all_10_chapters_navigate": true,
+            "source_jump_and_return": true,
+            "search_results_navigation": true,
+            "progress_persists_on_reload": true,
+            "font_wrap_focus_controls": true,
+            "copy_payload_matches_snippet_without_line_numbers": true,
+            "copy_test_uses_clipboard_stub": true,
+            "svg_renders": true,
+            "mobile_toc_and_chapter_buttons": true,
+            "mobile_no_page_overflow": true,
+            "all_20_chapters_visible_without_javascript": true
+          },
+          "chapter_overflow": [],
+          "javascript_errors": []
+        },
+        "html": {
+          "duplicate_ids": [],
+          "missing_internal_targets": [],
+          "code_blocks": 115,
+          "all_code_blocks_ascii": true,
+          "editor": "vim",
+          "chapters": 20,
+          "step_blocks": 40,
+          "source_integrity": [
+            {
+              "file": "01_temperature.py",
+              "steps_match_file": true,
+              "appendix_matches_file": true
+            },
+            {
+              "file": "02_bill_splitter.py",
+              "steps_match_file": true,
+              "appendix_matches_file": true
+            },
+            {
+              "file": "03_recipe_scaler.py",
+              "steps_match_file": true,
+              "appendix_matches_file": true
+            },
+            {
+              "file": "04_date_countdown.py",
+              "steps_match_file": true,
+              "appendix_matches_file": true
+            },
+            {
+              "file": "05_study_planner.py",
+              "steps_match_file": true,
+              "appendix_matches_file": true
+            },
+            {
+              "file": "06_flashcard_quiz.py",
+              "steps_match_file": true,
+              "appendix_matches_file": true
+            },
+            {
+              "file": "07_text_wrapper.py",
+              "steps_match_file": true,
+              "appendix_matches_file": true
+            },
+            {
+              "file": "08_score_bars.py",
+              "steps_match_file": true,
+              "appendix_matches_file": true
+            },
+            {
+              "file": "09_treasure_hunt.py",
+              "steps_match_file": true,
+              "appendix_matches_file": true
+            },
+            {
+              "file": "10_svg_tiles.py",
+              "steps_match_file": true,
+              "appendix_matches_file": true
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "pass_number": 12,
+    "title": "配布物からの再実行",
+    "scope": "ZIPを別フォルダーへ展開して85件を実行",
+    "status": "passed",
+    "seconds": 0.991,
+    "evidence": {
+      "archive_crc": "passed",
+      "extracted_source_matches": true,
+      "extracted_tests": 85,
+      "failures": 0
+    }
+  }
+]

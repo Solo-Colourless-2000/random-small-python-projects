@@ -1,0 +1,755 @@
+[
+  {
+    "name": "01_normal",
+    "file": "01_temperature.py",
+    "args": [],
+    "stdin": "18\n",
+    "status": 0,
+    "expected": "Temperature in Celsius: Fahrenheit: 64.4 F\n",
+    "contains": null
+  },
+  {
+    "name": "01_documented_error",
+    "file": "01_temperature.py",
+    "args": [],
+    "stdin": "abc\n",
+    "status": 2,
+    "expected": "Temperature in Celsius: Error: enter a number.\n",
+    "contains": null
+  },
+  {
+    "name": "02_normal",
+    "file": "02_bill_splitter.py",
+    "args": [
+      "1000",
+      "3"
+    ],
+    "stdin": "",
+    "status": 0,
+    "expected": "People paying 334 JPY: 1\nPeople paying 333 JPY: 2\nChecked total: 1000 JPY\n",
+    "contains": null
+  },
+  {
+    "name": "02_documented_error",
+    "file": "02_bill_splitter.py",
+    "args": [
+      "1000",
+      "0"
+    ],
+    "stdin": "",
+    "status": 2,
+    "expected": "Error: total must be 0-10000000 JPY; people must be 1-100.\n",
+    "contains": null
+  },
+  {
+    "name": "03_normal",
+    "file": "03_recipe_scaler.py",
+    "args": [
+      "3"
+    ],
+    "stdin": "",
+    "status": 0,
+    "expected": "Servings: 3 / Scale: 1.50\nrice: 225.0 g\nwater: 300.0 g\ncarrot: 90.0 g\n",
+    "contains": null
+  },
+  {
+    "name": "03_documented_error",
+    "file": "03_recipe_scaler.py",
+    "args": [
+      "0"
+    ],
+    "stdin": "",
+    "status": 2,
+    "expected": "Error: servings must be 1-20.\n",
+    "contains": null
+  },
+  {
+    "name": "04_normal",
+    "file": "04_date_countdown.py",
+    "args": [
+      "2026-11-07",
+      "2026-11-10"
+    ],
+    "stdin": "",
+    "status": 0,
+    "expected": "Days remaining: 3\n",
+    "contains": null
+  },
+  {
+    "name": "04_documented_error",
+    "file": "04_date_countdown.py",
+    "args": [
+      "2026-02-30",
+      "2026-03-01"
+    ],
+    "stdin": "",
+    "status": 2,
+    "expected": "Error: use valid dates in YYYY-MM-DD format.\n",
+    "contains": null
+  },
+  {
+    "name": "05_normal",
+    "file": "05_study_planner.py",
+    "args": [
+      "09:00",
+      "2"
+    ],
+    "stdin": "",
+    "status": 0,
+    "expected": "Study 1: 09:00 -> 09:25\nBreak: 09:25 -> 09:30\nStudy 2: 09:30 -> 09:55\nFinish: 09:55\n",
+    "contains": null
+  },
+  {
+    "name": "05_documented_error",
+    "file": "05_study_planner.py",
+    "args": [
+      "25:00",
+      "2"
+    ],
+    "stdin": "",
+    "status": 2,
+    "expected": "Error: time must be 00:00-23:59; sets must be 1-8.\n",
+    "contains": null
+  },
+  {
+    "name": "06_normal",
+    "file": "06_flashcard_quiz.py",
+    "args": [],
+    "stdin": "apple\npen\nwater\n",
+    "status": 0,
+    "expected": "Type the English word for each clue.\nQ1 a red fruit: Correct!\nQ2 something you read: Answer: book\nQ3 something you drink: Correct!\nScore: 2 / 3\n",
+    "contains": null
+  },
+  {
+    "name": "06_documented_error",
+    "file": "06_flashcard_quiz.py",
+    "args": [],
+    "stdin": "",
+    "status": 1,
+    "expected": "Type the English word for each clue.\nQ1 a red fruit: \nQuiz stopped.\n",
+    "contains": null
+  },
+  {
+    "name": "07_normal",
+    "file": "07_text_wrapper.py",
+    "args": [
+      "12",
+      "Python makes small tools easy to build."
+    ],
+    "stdin": "",
+    "status": 0,
+    "expected": "Python makes\nsmall tools\neasy to\nbuild.\nLines: 4\n",
+    "contains": null
+  },
+  {
+    "name": "07_documented_error",
+    "file": "07_text_wrapper.py",
+    "args": [
+      "0",
+      "hello"
+    ],
+    "stdin": "",
+    "status": 2,
+    "expected": "Error: width must be 5-80; text must contain 1-2000 characters.\n",
+    "contains": null
+  },
+  {
+    "name": "08_normal",
+    "file": "08_score_bars.py",
+    "args": [
+      "60",
+      "85",
+      "100"
+    ],
+    "stdin": "",
+    "status": 0,
+    "expected": "Scale: # = 10 points (rounded down)\n01 | ######      60\n02 | ########    85\n03 | ########## 100\nAverage: 81.7\n",
+    "contains": null
+  },
+  {
+    "name": "08_documented_error",
+    "file": "08_score_bars.py",
+    "args": [
+      "101"
+    ],
+    "stdin": "",
+    "status": 2,
+    "expected": "Error: scores must be 0-100.\n",
+    "contains": null
+  },
+  {
+    "name": "09_normal",
+    "file": "09_treasure_hunt.py",
+    "args": [],
+    "stdin": "1 1\n4 2\n",
+    "status": 0,
+    "expected": "Treasure hunt: x increases east, y increases north. Range: 1-5. Guesses: 5.\nGuess x y: Hint: east / north. Guesses left: 4\nGuess x y: Found it! Guesses used: 2.\n",
+    "contains": null
+  },
+  {
+    "name": "09_documented_error",
+    "file": "09_treasure_hunt.py",
+    "args": [],
+    "stdin": "",
+    "status": 1,
+    "expected": "Treasure hunt: x increases east, y increases north. Range: 1-5. Guesses: 5.\nGuess x y: \nGame stopped.\n",
+    "contains": null
+  },
+  {
+    "name": "10_normal",
+    "file": "10_svg_tiles.py",
+    "args": [
+      "practice/tiles.svg"
+    ],
+    "stdin": "",
+    "status": 0,
+    "expected": "Saved: practice/tiles.svg (4x4 = 16 tiles)\n",
+    "contains": null
+  },
+  {
+    "name": "10_documented_error",
+    "file": "10_svg_tiles.py",
+    "args": [
+      "practice/tiles.txt"
+    ],
+    "stdin": "",
+    "status": 2,
+    "expected": "Error: output must have a .svg extension.\n",
+    "contains": null
+  },
+  {
+    "name": "01_closed_input",
+    "file": "01_temperature.py",
+    "args": [],
+    "stdin": "",
+    "status": 1,
+    "expected": "Temperature in Celsius: \nConversion stopped.\n",
+    "contains": null
+  },
+  {
+    "name": "01_zero",
+    "file": "01_temperature.py",
+    "args": [],
+    "stdin": "0\n",
+    "status": 0,
+    "expected": "Temperature in Celsius: Fahrenheit: 32.0 F\n",
+    "contains": null
+  },
+  {
+    "name": "01_negative",
+    "file": "01_temperature.py",
+    "args": [],
+    "stdin": "-10\n",
+    "status": 0,
+    "expected": "Temperature in Celsius: Fahrenheit: 14.0 F\n",
+    "contains": null
+  },
+  {
+    "name": "01_nan",
+    "file": "01_temperature.py",
+    "args": [],
+    "stdin": "nan\n",
+    "status": 2,
+    "expected": null,
+    "contains": "finite number"
+  },
+  {
+    "name": "01_inf",
+    "file": "01_temperature.py",
+    "args": [],
+    "stdin": "inf\n",
+    "status": 2,
+    "expected": null,
+    "contains": "finite number"
+  },
+  {
+    "name": "01_above",
+    "file": "01_temperature.py",
+    "args": [],
+    "stdin": "101\n",
+    "status": 2,
+    "expected": null,
+    "contains": "finite number"
+  },
+  {
+    "name": "01_below",
+    "file": "01_temperature.py",
+    "args": [],
+    "stdin": "-101\n",
+    "status": 2,
+    "expected": null,
+    "contains": "finite number"
+  },
+  {
+    "name": "02_no_remainder",
+    "file": "02_bill_splitter.py",
+    "args": [
+      "1200",
+      "3"
+    ],
+    "stdin": "",
+    "status": 0,
+    "expected": "People paying 401 JPY: 0\nPeople paying 400 JPY: 3\nChecked total: 1200 JPY\n",
+    "contains": null
+  },
+  {
+    "name": "02_zero_total",
+    "file": "02_bill_splitter.py",
+    "args": [
+      "0",
+      "3"
+    ],
+    "stdin": "",
+    "status": 0,
+    "expected": null,
+    "contains": "Checked total: 0 JPY"
+  },
+  {
+    "name": "02_decimal_people",
+    "file": "02_bill_splitter.py",
+    "args": [
+      "1000",
+      "3.0"
+    ],
+    "stdin": "",
+    "status": 2,
+    "expected": null,
+    "contains": "integers"
+  },
+  {
+    "name": "02_too_many_people",
+    "file": "02_bill_splitter.py",
+    "args": [
+      "1000",
+      "101"
+    ],
+    "stdin": "",
+    "status": 2,
+    "expected": null,
+    "contains": "1-100"
+  },
+  {
+    "name": "03_one_serving",
+    "file": "03_recipe_scaler.py",
+    "args": [
+      "1"
+    ],
+    "stdin": "",
+    "status": 0,
+    "expected": "Servings: 1 / Scale: 0.50\nrice: 75.0 g\nwater: 100.0 g\ncarrot: 30.0 g\n",
+    "contains": null
+  },
+  {
+    "name": "03_max_servings",
+    "file": "03_recipe_scaler.py",
+    "args": [
+      "20"
+    ],
+    "stdin": "",
+    "status": 0,
+    "expected": null,
+    "contains": "rice: 1500.0 g"
+  },
+  {
+    "name": "03_decimal",
+    "file": "03_recipe_scaler.py",
+    "args": [
+      "1.5"
+    ],
+    "stdin": "",
+    "status": 2,
+    "expected": null,
+    "contains": "integer"
+  },
+  {
+    "name": "04_same_date",
+    "file": "04_date_countdown.py",
+    "args": [
+      "2026-11-07",
+      "2026-11-07"
+    ],
+    "stdin": "",
+    "status": 0,
+    "expected": "The event is on the reference date.\n",
+    "contains": null
+  },
+  {
+    "name": "04_past",
+    "file": "04_date_countdown.py",
+    "args": [
+      "2026-11-07",
+      "2026-11-04"
+    ],
+    "stdin": "",
+    "status": 0,
+    "expected": "Days since event: 3\n",
+    "contains": null
+  },
+  {
+    "name": "04_leap_year",
+    "file": "04_date_countdown.py",
+    "args": [
+      "2028-02-28",
+      "2028-03-01"
+    ],
+    "stdin": "",
+    "status": 0,
+    "expected": "Days remaining: 2\n",
+    "contains": null
+  },
+  {
+    "name": "04_normal_year",
+    "file": "04_date_countdown.py",
+    "args": [
+      "2027-02-28",
+      "2027-03-01"
+    ],
+    "stdin": "",
+    "status": 0,
+    "expected": "Days remaining: 1\n",
+    "contains": null
+  },
+  {
+    "name": "04_compact_rejected",
+    "file": "04_date_countdown.py",
+    "args": [
+      "20261107",
+      "2026-11-10"
+    ],
+    "stdin": "",
+    "status": 2,
+    "expected": null,
+    "contains": "YYYY-MM-DD"
+  },
+  {
+    "name": "05_one_set",
+    "file": "05_study_planner.py",
+    "args": [
+      "09:00",
+      "1"
+    ],
+    "stdin": "",
+    "status": 0,
+    "expected": "Study 1: 09:00 -> 09:25\nFinish: 09:25\n",
+    "contains": null
+  },
+  {
+    "name": "05_midnight",
+    "file": "05_study_planner.py",
+    "args": [
+      "23:50",
+      "1"
+    ],
+    "stdin": "",
+    "status": 0,
+    "expected": "Study 1: 23:50 -> 00:15\nFinish: 00:15 (next day)\n",
+    "contains": null
+  },
+  {
+    "name": "05_zero_sets",
+    "file": "05_study_planner.py",
+    "args": [
+      "09:00",
+      "0"
+    ],
+    "stdin": "",
+    "status": 2,
+    "expected": null,
+    "contains": "1-8"
+  },
+  {
+    "name": "05_max_sets",
+    "file": "05_study_planner.py",
+    "args": [
+      "09:00",
+      "8"
+    ],
+    "stdin": "",
+    "status": 0,
+    "expected": null,
+    "contains": "Finish: 12:55"
+  },
+  {
+    "name": "05_nine_sets",
+    "file": "05_study_planner.py",
+    "args": [
+      "09:00",
+      "9"
+    ],
+    "stdin": "",
+    "status": 2,
+    "expected": null,
+    "contains": "1-8"
+  },
+  {
+    "name": "05_short_time",
+    "file": "05_study_planner.py",
+    "args": [
+      "9:00",
+      "2"
+    ],
+    "stdin": "",
+    "status": 2,
+    "expected": null,
+    "contains": "00:00-23:59"
+  },
+  {
+    "name": "06_all_correct",
+    "file": "06_flashcard_quiz.py",
+    "args": [],
+    "stdin": "apple\nbook\nwater\n",
+    "status": 0,
+    "expected": null,
+    "contains": "Score: 3 / 3"
+  },
+  {
+    "name": "06_case_and_space",
+    "file": "06_flashcard_quiz.py",
+    "args": [],
+    "stdin": " APPLE \nBOOK\n Water \n",
+    "status": 0,
+    "expected": null,
+    "contains": "Score: 3 / 3"
+  },
+  {
+    "name": "06_all_blank",
+    "file": "06_flashcard_quiz.py",
+    "args": [],
+    "stdin": "\n\n\n",
+    "status": 0,
+    "expected": null,
+    "contains": "Score: 0 / 3"
+  },
+  {
+    "name": "07_long_word",
+    "file": "07_text_wrapper.py",
+    "args": [
+      "5",
+      "abcdefghijk"
+    ],
+    "stdin": "",
+    "status": 0,
+    "expected": "abcde\nfghij\nk\nLines: 3\n",
+    "contains": null
+  },
+  {
+    "name": "07_blank",
+    "file": "07_text_wrapper.py",
+    "args": [
+      "12",
+      "   "
+    ],
+    "stdin": "",
+    "status": 2,
+    "expected": null,
+    "contains": "1-2000"
+  },
+  {
+    "name": "07_too_long",
+    "file": "07_text_wrapper.py",
+    "args": [
+      "12",
+      "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    ],
+    "stdin": "",
+    "status": 2,
+    "expected": null,
+    "contains": "1-2000"
+  },
+  {
+    "name": "07_noninteger",
+    "file": "07_text_wrapper.py",
+    "args": [
+      "wide",
+      "hello"
+    ],
+    "stdin": "",
+    "status": 2,
+    "expected": null,
+    "contains": "integer"
+  },
+  {
+    "name": "08_zero_and_rounding",
+    "file": "08_score_bars.py",
+    "args": [
+      "0",
+      "9",
+      "10"
+    ],
+    "stdin": "",
+    "status": 0,
+    "expected": "Scale: # = 10 points (rounded down)\n01 |              0\n02 |              9\n03 | #           10\nAverage: 6.3\n",
+    "contains": null
+  },
+  {
+    "name": "08_negative",
+    "file": "08_score_bars.py",
+    "args": [
+      "-1"
+    ],
+    "stdin": "",
+    "status": 2,
+    "expected": null,
+    "contains": "0-100"
+  },
+  {
+    "name": "08_decimal",
+    "file": "08_score_bars.py",
+    "args": [
+      "50.5"
+    ],
+    "stdin": "",
+    "status": 2,
+    "expected": null,
+    "contains": "integers"
+  },
+  {
+    "name": "08_ten_scores",
+    "file": "08_score_bars.py",
+    "args": [
+      "100",
+      "100",
+      "100",
+      "100",
+      "100",
+      "100",
+      "100",
+      "100",
+      "100",
+      "100"
+    ],
+    "stdin": "",
+    "status": 0,
+    "expected": null,
+    "contains": "10 | ########## 100"
+  },
+  {
+    "name": "08_eleven_scores",
+    "file": "08_score_bars.py",
+    "args": [
+      "100",
+      "100",
+      "100",
+      "100",
+      "100",
+      "100",
+      "100",
+      "100",
+      "100",
+      "100",
+      "100"
+    ],
+    "stdin": "",
+    "status": 2,
+    "expected": null,
+    "contains": "Usage:"
+  },
+  {
+    "name": "09_first_guess",
+    "file": "09_treasure_hunt.py",
+    "args": [],
+    "stdin": "4 2\n",
+    "status": 0,
+    "expected": null,
+    "contains": "Found it! Guesses used: 1."
+  },
+  {
+    "name": "09_range_does_not_count",
+    "file": "09_treasure_hunt.py",
+    "args": [],
+    "stdin": "0 2\n4 2\n",
+    "status": 0,
+    "expected": null,
+    "contains": "Found it! Guesses used: 1."
+  },
+  {
+    "name": "09_invalid_does_not_count",
+    "file": "09_treasure_hunt.py",
+    "args": [],
+    "stdin": "1,1\nabc\n1 2 3\n4 2\n",
+    "status": 0,
+    "expected": null,
+    "contains": "Found it! Guesses used: 1."
+  },
+  {
+    "name": "09_five_misses",
+    "file": "09_treasure_hunt.py",
+    "args": [],
+    "stdin": "1 1\n1 1\n1 1\n1 1\n1 1\n",
+    "status": 0,
+    "expected": null,
+    "contains": "Game over. The treasure was at (4, 2)."
+  },
+  {
+    "name": "09_same_axis",
+    "file": "09_treasure_hunt.py",
+    "args": [],
+    "stdin": "4 1\n4 2\n",
+    "status": 0,
+    "expected": null,
+    "contains": "Hint: same x / north."
+  },
+  {
+    "name": "02_missing_arguments",
+    "file": "02_bill_splitter.py",
+    "args": [],
+    "stdin": "",
+    "status": 2,
+    "expected": null,
+    "contains": "Usage:"
+  },
+  {
+    "name": "03_missing_arguments",
+    "file": "03_recipe_scaler.py",
+    "args": [],
+    "stdin": "",
+    "status": 2,
+    "expected": null,
+    "contains": "Usage:"
+  },
+  {
+    "name": "04_missing_arguments",
+    "file": "04_date_countdown.py",
+    "args": [],
+    "stdin": "",
+    "status": 2,
+    "expected": null,
+    "contains": "Usage:"
+  },
+  {
+    "name": "05_missing_arguments",
+    "file": "05_study_planner.py",
+    "args": [],
+    "stdin": "",
+    "status": 2,
+    "expected": null,
+    "contains": "Usage:"
+  },
+  {
+    "name": "07_missing_arguments",
+    "file": "07_text_wrapper.py",
+    "args": [],
+    "stdin": "",
+    "status": 2,
+    "expected": null,
+    "contains": "Usage:"
+  },
+  {
+    "name": "08_missing_arguments",
+    "file": "08_score_bars.py",
+    "args": [],
+    "stdin": "",
+    "status": 2,
+    "expected": null,
+    "contains": "Usage:"
+  },
+  {
+    "name": "10_missing_arguments",
+    "file": "10_svg_tiles.py",
+    "args": [],
+    "stdin": "",
+    "status": 2,
+    "expected": null,
+    "contains": "Usage:"
+  }
+]

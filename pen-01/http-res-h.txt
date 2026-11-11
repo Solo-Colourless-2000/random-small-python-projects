@@ -1,18 +1,9 @@
- GET /word1844.html HTTP/1.1
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/jxl,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
-Accept-Encoding: gzip, deflate, br, zstd
-Accept-Language: en-US,en;q=0.9,ja;q=0.8
-Cache-Control: max-age=0
-Connection: keep-alive
-Cookie: PHPSESSID=mbb8013ra0uql1ar3ccb1l60in; _ga=GA1.1.1479417208.1794400646; wa3i-3-i_info_cookie=844%3C%3EHTTP%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%83%98%E3%83%83%E3%83%80%2C1577%3C%3E%E3%82%AD%E3%83%A3%E3%83%AA%E3%83%83%E3%82%B8%E3%83%AA%E3%82%BF%E3%83%BC%E3%83%B3; _ga_7LPHR28GP5=GS2.1.s1794400645$o1$g1$t1794401964$j60$l0$h0
-Host: wa3.i-3-i.info
-Referer: https://www.google.com/
-Sec-Fetch-Dest: document
-Sec-Fetch-Mode: navigate
-Sec-Fetch-Site: cross-site
-Sec-Fetch-User: ?1
-Upgrade-Insecure-Requests: 1
-User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36
-sec-ch-ua: "Not-A.Brand";v="99", "Google Chrome";v="157", "Chromium";v="157"
-sec-ch-ua-mobile: ?0
-sec-ch-ua-platform: "Linux"
+HTTP/1.1 200 OK
+Date: Wed, 11 Nov 2026 21:56:14 GMT
+Server: Apache
+Set-Cookie: wa3i-3-i_info_cookie=844%3C%3EHTTP%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%83%98%E3%83%83%E3%83%80%2C1577%3C%3E%E3%82%AD%E3%83%A3%E3%83%AA%E3%83%83%E3%82%B8%E3%83%AA%E3%82%BF%E3%83%BC%E3%83%B3; expires=Tue, 09 Feb 2027 21:56:14 GMT; Max-Age=7776000; path=/; domain=wa3.i-3-i.info
+X-Powered-By: PleskLin
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Transfer-Encoding: chunked
+Content-Type: text/html; charset=UTF-8

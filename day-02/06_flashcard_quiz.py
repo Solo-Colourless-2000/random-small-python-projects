@@ -14,7 +14,6 @@ def main():
                 print("Correct!")
             else:
                 print(f"Answer: {answer}")
-
     except (EOFError, KeyboardInterrupt):
         print("\nQuiz stopped.")
         return 1

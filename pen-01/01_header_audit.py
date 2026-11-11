@@ -52,3 +52,21 @@ def inspect(fields, scheme):
     else:
         notes.append("INFO HSTS: only meaningful over HTTPS")
     return notes
+
+
+def main():
+    if len(sys.argv) != 3 or sys.argv[2] not in ("http", "https"):
+        print("Usage: python3 01_header_audit.py file http|https")
+        return 2
+    try:
+        fields = read_headers(Path(sys.argv[1]))
+        for note in inspect(fields, sys.argv[2]):
+            print(note)
+    except (OSError, UnicodeError, ValueError) as exc:
+        print(f"Error: {exc}")
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

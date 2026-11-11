@@ -1,0 +1,447 @@
+{
+  "environment": "Chromium headless set_content, viewport 820px high; code/table inner horizontal scroll permitted",
+  "group": "large",
+  "checks": [
+    {
+      "check": "768: cover fits without page overflow",
+      "pass": true,
+      "observation": {
+        "vp": 768,
+        "body": 768,
+        "main": 768,
+        "head": 130.078125
+      }
+    },
+    {
+      "check": "768: main fits screen",
+      "pass": true,
+      "observation": 768
+    },
+    {
+      "check": "768: header is compact",
+      "pass": true,
+      "observation": 130.078125
+    },
+    {
+      "check": "768: cover cards are not narrower than 100px",
+      "pass": true,
+      "observation": null
+    },
+    {
+      "check": "768: p01 section navigation",
+      "pass": true,
+      "observation": {
+        "scroll": 768,
+        "active": "p01"
+      }
+    },
+    {
+      "check": "768: p01 no body overflow",
+      "pass": true,
+      "observation": {
+        "scroll": 768,
+        "active": "p01"
+      }
+    },
+    {
+      "check": "768: p09 section navigation",
+      "pass": true,
+      "observation": {
+        "scroll": 768,
+        "active": "p09"
+      }
+    },
+    {
+      "check": "768: p09 no body overflow",
+      "pass": true,
+      "observation": {
+        "scroll": 768,
+        "active": "p09"
+      }
+    },
+    {
+      "check": "768: appendix-a section navigation",
+      "pass": true,
+      "observation": {
+        "scroll": 768,
+        "active": "appendix-a"
+      }
+    },
+    {
+      "check": "768: appendix-a no body overflow",
+      "pass": true,
+      "observation": {
+        "scroll": 768,
+        "active": "appendix-a"
+      }
+    },
+    {
+      "check": "768: code content remains reachable",
+      "pass": true,
+      "observation": null
+    },
+    {
+      "check": "768: cover no page overflow at 140%",
+      "pass": true,
+      "observation": 768
+    },
+    {
+      "check": "768: p01 no page overflow at 140%",
+      "pass": true,
+      "observation": 768
+    },
+    {
+      "check": "768: p09 no page overflow at 140%",
+      "pass": true,
+      "observation": 768
+    },
+    {
+      "check": "768: appendix-a no page overflow at 140%",
+      "pass": true,
+      "observation": 768
+    },
+    {
+      "check": "768: no script errors",
+      "pass": true,
+      "observation": []
+    },
+    {
+      "check": "768: mobile TOC accessible",
+      "pass": true,
+      "observation": null
+    },
+    {
+      "check": "768: mobile TOC closes after choice",
+      "pass": true,
+      "observation": null
+    },
+    {
+      "check": "1024: cover fits without page overflow",
+      "pass": true,
+      "observation": {
+        "vp": 1024,
+        "body": 1024,
+        "main": 1024,
+        "head": 100.890625
+      }
+    },
+    {
+      "check": "1024: main fits screen",
+      "pass": true,
+      "observation": 1024
+    },
+    {
+      "check": "1024: header is compact",
+      "pass": true,
+      "observation": 100.890625
+    },
+    {
+      "check": "1024: cover cards are not narrower than 100px",
+      "pass": true,
+      "observation": null
+    },
+    {
+      "check": "1024: p01 section navigation",
+      "pass": true,
+      "observation": {
+        "scroll": 1024,
+        "active": "p01"
+      }
+    },
+    {
+      "check": "1024: p01 no body overflow",
+      "pass": true,
+      "observation": {
+        "scroll": 1024,
+        "active": "p01"
+      }
+    },
+    {
+      "check": "1024: p09 section navigation",
+      "pass": true,
+      "observation": {
+        "scroll": 1024,
+        "active": "p09"
+      }
+    },
+    {
+      "check": "1024: p09 no body overflow",
+      "pass": true,
+      "observation": {
+        "scroll": 1024,
+        "active": "p09"
+      }
+    },
+    {
+      "check": "1024: appendix-a section navigation",
+      "pass": true,
+      "observation": {
+        "scroll": 1024,
+        "active": "appendix-a"
+      }
+    },
+    {
+      "check": "1024: appendix-a no body overflow",
+      "pass": true,
+      "observation": {
+        "scroll": 1024,
+        "active": "appendix-a"
+      }
+    },
+    {
+      "check": "1024: code content remains reachable",
+      "pass": true,
+      "observation": null
+    },
+    {
+      "check": "1024: cover no page overflow at 140%",
+      "pass": true,
+      "observation": 1024
+    },
+    {
+      "check": "1024: p01 no page overflow at 140%",
+      "pass": true,
+      "observation": 1024
+    },
+    {
+      "check": "1024: p09 no page overflow at 140%",
+      "pass": true,
+      "observation": 1024
+    },
+    {
+      "check": "1024: appendix-a no page overflow at 140%",
+      "pass": true,
+      "observation": 1024
+    },
+    {
+      "check": "1024: no script errors",
+      "pass": true,
+      "observation": []
+    },
+    {
+      "check": "1024: desktop nav visible",
+      "pass": true,
+      "observation": null
+    },
+    {
+      "check": "1366: cover fits without page overflow",
+      "pass": true,
+      "observation": {
+        "vp": 1366,
+        "body": 1366,
+        "main": 1366,
+        "head": 100.890625
+      }
+    },
+    {
+      "check": "1366: main fits screen",
+      "pass": true,
+      "observation": 1366
+    },
+    {
+      "check": "1366: header is compact",
+      "pass": true,
+      "observation": 100.890625
+    },
+    {
+      "check": "1366: cover cards are not narrower than 100px",
+      "pass": true,
+      "observation": null
+    },
+    {
+      "check": "1366: p01 section navigation",
+      "pass": true,
+      "observation": {
+        "scroll": 1366,
+        "active": "p01"
+      }
+    },
+    {
+      "check": "1366: p01 no body overflow",
+      "pass": true,
+      "observation": {
+        "scroll": 1366,
+        "active": "p01"
+      }
+    },
+    {
+      "check": "1366: p09 section navigation",
+      "pass": true,
+      "observation": {
+        "scroll": 1366,
+        "active": "p09"
+      }
+    },
+    {
+      "check": "1366: p09 no body overflow",
+      "pass": true,
+      "observation": {
+        "scroll": 1366,
+        "active": "p09"
+      }
+    },
+    {
+      "check": "1366: appendix-a section navigation",
+      "pass": true,
+      "observation": {
+        "scroll": 1366,
+        "active": "appendix-a"
+      }
+    },
+    {
+      "check": "1366: appendix-a no body overflow",
+      "pass": true,
+      "observation": {
+        "scroll": 1366,
+        "active": "appendix-a"
+      }
+    },
+    {
+      "check": "1366: code content remains reachable",
+      "pass": true,
+      "observation": null
+    },
+    {
+      "check": "1366: cover no page overflow at 140%",
+      "pass": true,
+      "observation": 1366
+    },
+    {
+      "check": "1366: p01 no page overflow at 140%",
+      "pass": true,
+      "observation": 1366
+    },
+    {
+      "check": "1366: p09 no page overflow at 140%",
+      "pass": true,
+      "observation": 1366
+    },
+    {
+      "check": "1366: appendix-a no page overflow at 140%",
+      "pass": true,
+      "observation": 1366
+    },
+    {
+      "check": "1366: no script errors",
+      "pass": true,
+      "observation": []
+    },
+    {
+      "check": "1366: desktop nav visible",
+      "pass": true,
+      "observation": null
+    },
+    {
+      "check": "1920: cover fits without page overflow",
+      "pass": true,
+      "observation": {
+        "vp": 1920,
+        "body": 1920,
+        "main": 1715,
+        "head": 100.890625
+      }
+    },
+    {
+      "check": "1920: main fits screen",
+      "pass": true,
+      "observation": 1715
+    },
+    {
+      "check": "1920: header is compact",
+      "pass": true,
+      "observation": 100.890625
+    },
+    {
+      "check": "1920: cover cards are not narrower than 100px",
+      "pass": true,
+      "observation": null
+    },
+    {
+      "check": "1920: p01 section navigation",
+      "pass": true,
+      "observation": {
+        "scroll": 1920,
+        "active": "p01"
+      }
+    },
+    {
+      "check": "1920: p01 no body overflow",
+      "pass": true,
+      "observation": {
+        "scroll": 1920,
+        "active": "p01"
+      }
+    },
+    {
+      "check": "1920: p09 section navigation",
+      "pass": true,
+      "observation": {
+        "scroll": 1920,
+        "active": "p09"
+      }
+    },
+    {
+      "check": "1920: p09 no body overflow",
+      "pass": true,
+      "observation": {
+        "scroll": 1920,
+        "active": "p09"
+      }
+    },
+    {
+      "check": "1920: appendix-a section navigation",
+      "pass": true,
+      "observation": {
+        "scroll": 1920,
+        "active": "appendix-a"
+      }
+    },
+    {
+      "check": "1920: appendix-a no body overflow",
+      "pass": true,
+      "observation": {
+        "scroll": 1920,
+        "active": "appendix-a"
+      }
+    },
+    {
+      "check": "1920: code content remains reachable",
+      "pass": true,
+      "observation": null
+    },
+    {
+      "check": "1920: cover no page overflow at 140%",
+      "pass": true,
+      "observation": 1920
+    },
+    {
+      "check": "1920: p01 no page overflow at 140%",
+      "pass": true,
+      "observation": 1920
+    },
+    {
+      "check": "1920: p09 no page overflow at 140%",
+      "pass": true,
+      "observation": 1920
+    },
+    {
+      "check": "1920: appendix-a no page overflow at 140%",
+      "pass": true,
+      "observation": 1920
+    },
+    {
+      "check": "1920: no script errors",
+      "pass": true,
+      "observation": []
+    },
+    {
+      "check": "1920: desktop nav visible",
+      "pass": true,
+      "observation": null
+    }
+  ],
+  "passed": 69,
+  "total": 69,
+  "failed": [],
+  "limitations": "Set_content checks layout, not file:// localStorage persistence or a physical mobile OS."
+}

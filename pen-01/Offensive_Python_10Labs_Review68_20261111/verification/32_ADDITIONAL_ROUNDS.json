@@ -1,0 +1,234 @@
+{
+  "timestamp_utc": "2026-11-11T08:06:54.444134+00:00",
+  "method": "32 different whole-package re-reads with a focused assertion each; no claim of 32 independent expert assessments",
+  "rounds": 32,
+  "passed": 32,
+  "aggregate_bytes_read": 74698592,
+  "scope_limit": "Constrained offline project, deterministic checks and representative tests; not a formal security audit.",
+  "details": [
+    {
+      "round": 1,
+      "focus": "10作品のファイル在庫",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 2,
+      "focus": "重複番号の排除",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 3,
+      "focus": "ASCIIコードと行末",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 4,
+      "focus": "10本のAST解析",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 5,
+      "focus": "標準ライブラリだけの参照",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 6,
+      "focus": "直接実行ガード",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 7,
+      "focus": "ネットワーク対象はループバックのみ",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 8,
+      "focus": "パス実習の教材内制限",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 9,
+      "focus": "安全なSQLの値バインド",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 10,
+      "focus": "危険なSQLはメモリDBに限定",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 11,
+      "focus": "認証試行は架空のリスト内",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 12,
+      "focus": "署名トークンのHMAC比較",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 13,
+      "focus": "鍵の公開に関する警告",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 14,
+      "focus": "オブジェクト単位の認可",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 15,
+      "focus": "PCAPの最小長とUDP長検査",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 16,
+      "focus": "HTTPメッセージの曖昧さの警告",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 17,
+      "focus": "単独CRの拒否",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 18,
+      "focus": "Base64URLの正規形確認",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 19,
+      "focus": "サンプルファイルの必須在庫",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 20,
+      "focus": "HTMLの20章",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 21,
+      "focus": "HTMLの40工程",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 22,
+      "focus": "全40工程が完成ソースと完全一致",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 23,
+      "focus": "全非空行の説明を記載",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 24,
+      "focus": "全行を字句解析して説明",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 25,
+      "focus": "代入と比較演算子の識別",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 26,
+      "focus": "f文字列と式埋め込みの解説",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 27,
+      "focus": "文字列とbytesの説明",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 28,
+      "focus": "ファイル・辞書メソッドの説明",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 29,
+      "focus": "構文解説の折り畳みUI",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 30,
+      "focus": "全内部リンクの実在",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 31,
+      "focus": "完成ソースのSHA-256整合",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    },
+    {
+      "round": 32,
+      "focus": "実行結果と表示ログの照合の証跡",
+      "files_read": 57,
+      "bytes_read": 2334331,
+      "result": "PASS"
+    }
+  ]
+}

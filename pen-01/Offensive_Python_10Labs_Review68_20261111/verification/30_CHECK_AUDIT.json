@@ -1,0 +1,218 @@
+{
+  "passes": 30,
+  "files_per_pass": 57,
+  "total_bytes_read": 70193130,
+  "records": [
+    {
+      "pass": 1,
+      "focus": "10本のファイル存在",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    },
+    {
+      "pass": 2,
+      "focus": "番号順と独立性",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    },
+    {
+      "pass": 3,
+      "focus": "ASCIIと最終改行",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    },
+    {
+      "pass": 4,
+      "focus": "Python AST構文",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    },
+    {
+      "pass": 5,
+      "focus": "直接実行ガード",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    },
+    {
+      "pass": 6,
+      "focus": "SHA-256整合",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    },
+    {
+      "pass": 7,
+      "focus": "レスポンスヘッダー方針",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    },
+    {
+      "pass": 8,
+      "focus": "Set-Cookie複数行",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    },
+    {
+      "pass": 9,
+      "focus": "CookieのSecure値と属性の違い",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    },
+    {
+      "pass": 10,
+      "focus": "ループバック固定",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    },
+    {
+      "pass": 11,
+      "focus": "トラバーサル境界",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    },
+    {
+      "pass": 12,
+      "focus": "SQL構造と値の分離",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    },
+    {
+      "pass": 13,
+      "focus": "スプレー試行の制限",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    },
+    {
+      "pass": 14,
+      "focus": "トークンHMACの改ざん拒否",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    },
+    {
+      "pass": 15,
+      "focus": "IDOR認可の差",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    },
+    {
+      "pass": 16,
+      "focus": "PCAPとTCP/UDP長",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    },
+    {
+      "pass": 17,
+      "focus": "HTTP要求の競合と不正改行",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    },
+    {
+      "pass": 18,
+      "focus": "サンプルファイル在庫",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    },
+    {
+      "pass": 19,
+      "focus": "HTML20章40工程",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    },
+    {
+      "pass": 20,
+      "focus": "HTML内部リンク",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    },
+    {
+      "pass": 21,
+      "focus": "コード工程と付録の一致",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    },
+    {
+      "pass": 22,
+      "focus": "逐行説明の存在・品質",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    },
+    {
+      "pass": 23,
+      "focus": "600分の計画と発展解説",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    },
+    {
+      "pass": 24,
+      "focus": "READMEの参照とRFC根拠",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    },
+    {
+      "pass": 25,
+      "focus": "TCP失敗の終了状態と総試行上限",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    },
+    {
+      "pass": 26,
+      "focus": "UDP長一致・HTTP過大入力・target制御文字",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    },
+    {
+      "pass": 27,
+      "focus": "HTTP空値と本文境界・単独CRの拒否",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    },
+    {
+      "pass": 28,
+      "focus": "Cookie引用符・TCP受信例外・教材公開鍵の限界",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    },
+    {
+      "pass": 29,
+      "focus": "条件分岐の個別逐行解説と旧ファイル名の排除",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    },
+    {
+      "pass": 30,
+      "focus": "320〜1920pxブラウザ141件のレイアウト検査と画像",
+      "files_scanned": 57,
+      "bytes_scanned": 2339771,
+      "result": "PASS"
+    }
+  ],
+  "limits": "30 differentiated automated checks and file rereads; not independent human peer review or exhaustive proof."
+}

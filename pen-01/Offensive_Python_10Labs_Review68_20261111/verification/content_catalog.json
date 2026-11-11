@@ -1,0 +1,1742 @@
+{
+  "data": [
+    {
+      "title": "攻撃前の偵察：HTTPヘッダーから検証仮説を立てる",
+      "english": "Response Header Auditor",
+      "mins": 50,
+      "desc": "HTTPレスポンスのヘッダーをファイルから読み、CSP、nosniff、Referrer-Policy、HSTSに関する確認事項を表示する。通信は行わない。",
+      "output": "「ヘッダーが存在するか」と「適切な防御になるか」は別問題。CSPのディレクティブやHSTSのmax-ageは、存在だけでは安全性が決まらない。",
+      "limits": "HTTPヘッダー全文を解釈する完全なパーサーではない。ポリシーを安全・危険と自動確定しない。HTTPS指定は保存元の状況を利用者が知っている前提。 Set-Cookieが複数行あること自体は正常なので、一般の重複警告と分ける。",
+      "terms": [
+        [
+          "レスポンスヘッダー",
+          "サーバーからクライアントへ返るメタデータ。名前と値をコロンで分ける。"
+        ],
+        [
+          "CSP",
+          "Content Security Policy。読み込み・実行できるコンテンツの制約を表すヘッダー。"
+        ],
+        [
+          "HSTS",
+          "HTTPS利用を促すStrict-Transport-Security。値と実際の配信条件まで見る必要がある。"
+        ]
+      ],
+      "steps": [
+        [
+          "ライブラリとデータ型の準備",
+          "ファイルを読み込む前に、正規表現とパスの処理に必要なモジュールを読み込む。"
+        ],
+        [
+          "保存済みヘッダーを辞書にする",
+          "フィールド名を構文検査し、値をリストで保持して重複を失わない。"
+        ],
+        [
+          "攻撃側の調査候補を判断する",
+          "Set-Cookieの繰り返しを正常なケースとして区別し、CSPやHSTSは存在と妥当性を混同しない。"
+        ],
+        [
+          "CLIとして実行・例外処理を追加する",
+          "入力パス、scheme、失敗した場合の終了値を含めて実行可能にする。"
+        ]
+      ],
+      "cuts": [
+        5,
+        35,
+        55
+      ],
+      "trace": [
+        [
+          "読み取り",
+          "Content-Security-Policy: default-src 'self'",
+          "名前は小文字化され、値は元の文字列を保持する。"
+        ],
+        [
+          "辞書",
+          "fields[\"content-security-policy\"] = [\"default-src 'self'\"]",
+          "値がリストなので重複ヘッダーも検出できる。"
+        ],
+        [
+          "条件",
+          "nosniff[0].lower() == \"nosniff\" → True",
+          "単なる存在より条件を一段深く見る。"
+        ],
+        [
+          "結果",
+          "REVIEW CSP: present, inspect directives",
+          "CSPの存在だけでは正しい設定と認定しない。"
+        ]
+      ],
+      "cmd": [
+        "python3 projects/01_header_audit.py samples/response_headers.txt https"
+      ],
+      "experiment": "samples/response_headers.txtのX-Content-Type-Optionsを消して再実行し、PASSからREVIEWへ変わるか確かめる。元のサンプルは必要ならコピーを作って変更する。",
+      "gotcha": "CSPやHSTSの「有無」と「構成の妥当性」を混同しない。HTTPで取得した実例にhttps引数を与えても、その環境の安全は証明されない。",
+      "phase": "偵察 / Reconnaissance",
+      "purpose": "保存された架空のHTTPレスポンスを観察し、セキュリティヘッダーの不在や重複を次の調査候補に挙げる。",
+      "attacker": "攻撃者はサーバーのHTTPレスポンスからセキュリティ制御の手掛かりを探す。ただしヘッダーがないだけでXSSや情報漏えいが成立するとは断言できない。",
+      "action": "samples/response_headers.txtを読み込んで候補を列挙。CSPがあるのにREVIEWになる理由も説明する。",
+      "evidence": "REVIEW HSTS: missingなどの出力は「追加検証の候補」であり、脆弱性の実証ではない。",
+      "mitigation": "アプリの要件に合うCSP、nosniff、HSTSなどを設計し、配信経路とブラウザーで別途評価する。",
+      "terms_extra": [
+        [
+          "偵察",
+          "攻撃対象の技術や設定を観察して仮説を絞る段階。"
+        ],
+        [
+          "誤検知",
+          "ツールが注意を促しても、実害や脆弱性が成立しないこと。"
+        ]
+      ]
+    },
+    {
+      "title": "Cookie偵察：セッション属性の弱点を見つける",
+      "english": "Cookie Attribute Reviewer",
+      "mins": 50,
+      "desc": "保存済みのSet-Cookieを解析してSecure、HttpOnly、SameSiteと__Host- / __Secure-の条件を点検する。",
+      "output": "Cookieは「値が秘密か」だけでなく、「いつ・どこで・どのような方法でブラウザーが送るか」が重要。SecureやSameSiteは他の設定と組み合わせて考える。",
+      "limits": "保存されたSet-Cookie行だけの教育用点検。CRLFとLFは受け付け、単独CRは拒否する（改行として黙って分割しない）。ブラウザーのCookie仕様全体、Expiresの日付形式、重複属性の処理を網羅しない。Secure属性の表示はHTTPSで本当に配信された証明にはならない。非標準的なSecure=0などは様式上のREVIEWとなるが、ブラウザーはSecure属性が存在すれば有効と解釈する。",
+      "terms": [
+        [
+          "Set-Cookie",
+          "HTTPレスポンスでCookieを設定するヘッダー。"
+        ],
+        [
+          "HttpOnly",
+          "スクリプト経由でCookieへアクセスできないようにする属性。XSSそのものを消す機能ではない。"
+        ],
+        [
+          "SameSite",
+          "クロスサイトでCookieを送る条件を制御する属性。Noneの場合はSecureも重要。"
+        ]
+      ],
+      "steps": [
+        [
+          "Cookie名を検査する準備",
+          "許されるCookie名の文字を正規表現で定義し、保存された行の解析に備える。"
+        ],
+        [
+          "Cookie名・値・属性を抽出する",
+          "Cookie名と値の書式を検査し、属性の重複も拒否する。"
+        ],
+        [
+          "Secure / HttpOnly / SameSiteを比較する",
+          "フラグの存在と空文字の値を分け、推奨されない属性表記を追加の警告にする。"
+        ],
+        [
+          "保存済みファイルを読み、報告する",
+          "ファイルをbytesとして読み、CRLF/LFを明示的に扱って単独CRは拒否し、Cookie値を表示せず報告する。"
+        ]
+      ],
+      "cuts": [
+        8,
+        35,
+        57
+      ],
+      "trace": [
+        [
+          "入力",
+          "Set-Cookie: tracking=example; SameSite=None",
+          "Cookie名はtracking。"
+        ],
+        [
+          "属性",
+          "attrs = {\"samesite\": \"None\"}",
+          "SecureとHttpOnlyが辞書に存在しない。"
+        ],
+        [
+          "検査",
+          "same_site == \"none\" and \"secure\" not in attrs → True",
+          "ブラウザー上の制約に関係する確認事項。"
+        ],
+        [
+          "出力",
+          "tracking: REVIEW missing secure; missing httponly; ...",
+          "Cookie値そのものは表示しない。"
+        ]
+      ],
+      "cmd": [
+        "python3 projects/02_cookie_review.py samples/cookies.txt"
+      ],
+      "experiment": "samples/cookies.txtのtracking行へ「; Secure; HttpOnly」を追加した複製を作り、警告の減り方を比べる。",
+      "gotcha": "splitlines()は単独CRも行の区切りとして扱うため、保存したヘッダーに単独CRが混入すると別行のように見えてしまう。教材では明示的に拒否する。Cookieのsecure / httponlyは空文字の属性値でもキーが存在するため、if attrs.get(\"secure\")では存在を正しく判定できない。Secure=0もブラウザーでは属性が存在するものとして扱う。",
+      "phase": "セッション調査 / Session review",
+      "purpose": "保存された架空のSet-Cookieから、Cookieの送信条件やJavaScriptからのアクセス可否に関する弱点候補を洗い出す。",
+      "attacker": "攻撃者は認証Cookieの扱いを調べ、盗用・漏えい・サイト間の意図しない送信につながる条件を探す。Cookie属性だけでは攻撃成功を証明できない。",
+      "action": "trackingというCookieにSecureとHttpOnlyがない例を読み、__Host-sessionとの違いを比較する。",
+      "evidence": "trackingにREVIEWが表示されても、そのCookieが機密セッションCookieとは限らない。用途とブラウザー挙動まで確認する。",
+      "mitigation": "認証用CookieではSecure、HttpOnly、適切なSameSiteや有効範囲を設計する。実際の脅威と用途に応じて決める。",
+      "terms_extra": [
+        [
+          "Cookieのスコープ",
+          "DomainとPathなどでCookieが送られる範囲。"
+        ],
+        [
+          "セッション",
+          "ユーザーのログイン状態などを複数リクエストで追跡する仕組み。"
+        ]
+      ]
+    },
+    {
+      "title": "サービス探索：自分のPCのTCPポートを調べる",
+      "english": "Loopback TCP Probe",
+      "mins": 55,
+      "desc": "自分のPCのループバックアドレスにのみTCP接続を試す。demoでは学習用サーバーを一時起動して確実にOPENを確認する。",
+      "output": "ポートが開いていることは、接続が成立したという観測。サービスの種類・認証の有無・脆弱性の有無を証明する情報ではない。",
+      "limits": "接続先IPは127.0.0.1に固定。ホスト指定やポート範囲の大量走査は実装しない。タイムアウトのためCLOSEDとUNREACHABLEは区別できない。ポート入力は無制限の数字列を整数に変換せず最大8文字を先に検査する（数値の許容範囲は1〜65535）。checkモードではOPENだけを接続成功とし、応答バナーは任意。demoモードでは専用バナーの一致も要求する。",
+      "terms": [
+        [
+          "ループバック",
+          "127.0.0.1。自分自身のネットワークスタックへアクセスするためのアドレス。"
+        ],
+        [
+          "TCP",
+          "通信前に接続を確立するトランスポートプロトコル。"
+        ],
+        [
+          "バナー",
+          "接続直後にサービスが返すことのある文字列。常にあるとは限らない。"
+        ]
+      ],
+      "steps": [
+        [
+          "接続先と標準モジュールを用意する",
+          "socket、threadingを読み込み、対象ホストを127.0.0.1に固定する。"
+        ],
+        [
+          "接続とバナー受信の結果を区別する",
+          "プローブ関数を実装し、接続成功、タイムアウト、バナー受信エラー、接続拒否を区別する。"
+        ],
+        [
+          "一時的な学習用サーバーを起動する",
+          "OSに空きポートを選ばせ、別スレッドで接続を1回受ける。自分のプローブで確かめる。"
+        ],
+        [
+          "demo/checkのコマンドを仕上げる",
+          "demo/checkのCLIを仕上げ、ポート文字列の長さと数値範囲を検査し、OPEN/CLOSEDで終了コードを返す。"
+        ]
+      ],
+      "cuts": [
+        8,
+        24,
+        46
+      ],
+      "trace": [
+        [
+          "server.bind",
+          "(127.0.0.1, 0)",
+          "ポート0はOSへ空きポートの割当てを依頼する。"
+        ],
+        [
+          "listen(1)",
+          "接続待機を開始",
+          "自分で作ったサーバーだけを使う。"
+        ],
+        [
+          "create_connection",
+          "127.0.0.1 と割り当てられたポート",
+          "他ホストを指定するCLI引数は用意しない。"
+        ],
+        [
+          "recv(64)",
+          "LAB SERVICE",
+          "一度に読むバイト数の上限がある。"
+        ],
+        [
+          "checkで接続失敗",
+          "status = CLOSED/UNREACHABLE",
+          "終了コード1。バナーが空でも成功0へ抜けない。"
+        ]
+      ],
+      "cmd": [
+        "python3 projects/03_loopback_probe.py demo"
+      ],
+      "experiment": "demoを実行するたびに「Local demo port」の数値が変わり得る理由を説明する。`check 1`では通常CLOSED/UNREACHABLEだが環境差がある。",
+      "gotcha": "開いているポートを見つけたことと攻撃可能であることを混同しない。demoの番号はOSが選ぶため、マニュアルに固定値を期待しない。 以前の版ではcheckでバナーが空の場合にreturnがなく、SystemExit(None)が成功0となっていた。改訂版は必ずOPEN/CLOSEDの判定に対応した終了コードを返す。",
+      "phase": "サービス列挙 / Enumeration",
+      "purpose": "127.0.0.1に仮想サービスを作り、ポートが開いているかと簡単なバナーを取得する。",
+      "attacker": "攻撃側は到達可能なサービスの入口を列挙する。接続できても脆弱性やサービスの正体までは確定できない。",
+      "action": "demoでOSが選んだローカルポートへ接続。64バイトまでのバナーを読みOPENを確認する。",
+      "evidence": "Status: OPENとLAB SERVICEが表示される。OSに依存するポート番号は一致しなくてよい。",
+      "mitigation": "公開すべきサービスだけに待受を限定し、認証・設定・更新状況を別に点検する。",
+      "terms_extra": [
+        [
+          "ポート番号",
+          "同じIPで複数サービスを区別するための番号。"
+        ],
+        [
+          "バナー取得",
+          "通信相手が自ら返す識別文字列を受け取ること。"
+        ]
+      ]
+    },
+    {
+      "title": "トラバーサル実験：公開フォルダーの外を読む",
+      "english": "Traversal Breakout Lab",
+      "mins": 60,
+      "desc": "自作の仮想公開フォルダーから一段外へ抜ける読み取りを再現し、unsafe/safe両方で同じ入力を比較する。",
+      "output": "被害例は教材フォルダー内の合成ファイルだけ。文字列フィルターではなく、解決後のパス境界チェックが必要な理由を説明する。",
+      "limits": "unsafeでも同梱samples以下しか読まないよう制限。実運用のファイル読取処理では安全なファイルディスクリプタの扱いや競合対策も必要。 関数を直接呼び出す場合もsafe/unsafe以外のモード名を拒否する。",
+      "terms": [
+        [
+          "トラバーサル",
+          "../により想定ディレクトリから抜ける試み。"
+        ],
+        [
+          "resolve",
+          "..やシンボリックリンクを反映させた実体パスを得る。"
+        ],
+        [
+          "境界チェック",
+          "基準とする公開ルートの内側に実体パスがあるかを判定する。"
+        ]
+      ],
+      "steps": [
+        [
+          "検証に使う公開ルートと教材の全体範囲を固定",
+          "SAMPLESとwebrootを明確に分け、実機の他ディレクトリを読み取らない構造にする。"
+        ],
+        [
+          "正規化後に公開ルートと教材範囲を区別する",
+          "unsafeでも教材samples外は拒否し、safeではwebrootの内側だけを許可する。"
+        ],
+        [
+          "入力と例外を扱うCLIを作る",
+          "モード・相対パスを受け取ってchoose関数を実行し、読み取り結果と異常終了を区別する。"
+        ],
+        [
+          "main関数を呼び出して終了する",
+          "直接実行時にmainの戻り値をOSへ渡し、成功と拒否の終了コードを確認する。"
+        ]
+      ],
+      "cuts": [
+        8,
+        26,
+        38
+      ],
+      "trace": [
+        [
+          "入力",
+          "../secret.txt",
+          "webrootの外へ1階層移動する相対指定。"
+        ],
+        [
+          "実体パス",
+          "samples/secret.txt",
+          "公開ルートの外だが教材samplesの中。"
+        ],
+        [
+          "unsafe",
+          "Private training sample",
+          "教材の秘密データが読める弱いパスチェック。"
+        ],
+        [
+          "safe",
+          "Blocked or unavailable",
+          "公開ルート外なので明確に拒否。"
+        ]
+      ],
+      "cmd": [
+        "python3 projects/04_path_guard.py unsafe ../secret.txt",
+        "python3 projects/04_path_guard.py safe ../secret.txt"
+      ],
+      "experiment": "`%2e%2e%2fsecret.txt`でもunsafe/safeの出力差を確認。シェルでは引数を引用符で囲むと入力の変化を防げる。",
+      "gotcha": "unsafeは「PC内のどのファイルでも読める」という意味ではなく、教材samplesフォルダーの中だけで意図的に弱くしている。",
+      "phase": "入力操作 / Path traversal",
+      "purpose": "意図的に弱くしたファイル読取処理へ../を渡して教材のsecret.txtを読み、対策版では拒否されることを確認する。",
+      "attacker": "攻撃者はファイル名パラメーターの境界を変化させ、許可された公開ディレクトリの外側へ到達できないか試す。",
+      "action": "unsafe ../secret.txtでは教材の秘密サンプルが表示され、safe ../secret.txtでは拒否される。同じ入力でも検査箇所で結果が変わる。",
+      "evidence": "unsafeでPrivate training sample、safeでBlocked or unavailableが表示される。unsafeでも教材samples/外は読み取れない。",
+      "mitigation": "解決後の実体パスを許可ルートと比較する。ただし実運用ではTOCTOUや多段デコードも別途考慮する。",
+      "terms_extra": [
+        [
+          "../",
+          "親ディレクトリへ移動する相対パス要素。"
+        ],
+        [
+          "TOCTOU",
+          "安全確認と実使用の間に対象が変わる競合状態。"
+        ]
+      ]
+    },
+    {
+      "title": "SQLインジェクション：条件式のすり替え実験",
+      "english": "SQL Parameter Binding Lab",
+      "mins": 60,
+      "desc": "メモリ上だけに作ったSQLiteを使い、危険なSQL文字列連結とプレースホルダー方式を同じ入力で比較する。",
+      "output": "不正な入力文字を禁止するより、入力をSQLの構造と切り離して値として扱うことが中心的な防御になる。",
+      "limits": "unsafeモードは故意の脆弱コード。学習用DBにしか接続しない。現実の認証・権限・DB固有機能の網羅的な検証ではない。 関数を直接呼び出してもsafe/unsafe以外のモード名は拒否する。",
+      "terms": [
+        [
+          "SQLインジェクション",
+          "入力文字列がSQLの一部として解釈され、意図した条件などを変える問題。"
+        ],
+        [
+          "プレースホルダー",
+          "SQL文の中の?に、別経路で値を渡す仕組み。"
+        ],
+        [
+          "in-memory DB",
+          "\":memory:\"で作る、ファイルに保存しない使い捨てのデータベース。"
+        ]
+      ],
+      "steps": [
+        [
+          "SQLiteを使うための準備",
+          "メモリ内データベースを扱う標準モジュールを読み込む。"
+        ],
+        [
+          "架空ユーザーを2件登録する",
+          "外部DBを用いずにテーブルを作りaliceとbobを保存する。"
+        ],
+        [
+          "安全なバインドと危険な連結を比較",
+          "?で渡す値はSQL構文に入らず、f文字列で連結するとSQLの構造を変えられる。"
+        ],
+        [
+          "CLIと失敗時の表示を完成させる",
+          "安全・危険モードへ同じ引数を渡し、結果の差を観察する。"
+        ]
+      ],
+      "cuts": [
+        6,
+        12,
+        21
+      ],
+      "trace": [
+        [
+          "初期DB",
+          "alice, bob",
+          "2行だけが登録される。"
+        ],
+        [
+          "入力",
+          "' OR 1=1 --",
+          "引用符を閉じて真となる条件を追加する学習用文字列。"
+        ],
+        [
+          "unsafe側",
+          "Matches: alice, bob",
+          "文字列がSQL構造へ混ざり、選択条件が変化する。"
+        ],
+        [
+          "safe側",
+          "Matches: (none)",
+          "同じ入力が単なるusername値として比較される。"
+        ]
+      ],
+      "cmd": [
+        "python3 projects/05_sql_parameter_lab.py unsafe \"' OR 1=1 --\"",
+        "python3 projects/05_sql_parameter_lab.py safe \"' OR 1=1 --\""
+      ],
+      "experiment": "`bob`をsafeとunsafeの両方で検索し、正しい入力の場合はどちらも一致することを確かめる。",
+      "gotcha": "「SQLに引用符を入れなければ安全」という説明は間違い。バインドされる値とSQL文の構造の区別が本質。",
+      "phase": "入力操作 / SQL injection",
+      "purpose": "自作のメモリ内SQLiteへ単純なSQLインジェクション文字列を渡し、危険な文字列連結とバインドを比較する。",
+      "attacker": "攻撃側は入力欄を通じてSQLの構造を変え、意図しないレコードが返らないかを確かめる。",
+      "action": "unsafeへ' OR 1=1 --を渡すとalice,bobが返るが、safeでは一致なしとなる。外部DBには接続しない。",
+      "evidence": "同じ入力でunsafeが2件、safeが0件。結果差からSQL構造とパラメータの境界を説明できる。",
+      "mitigation": "値をプレースホルダー経由で渡す。文字列連結や文字単位の禁止リストを防御の主手段にしない。",
+      "terms_extra": [
+        [
+          "ペイロード",
+          "検証の目的で入力する文字列やデータ。"
+        ],
+        [
+          "コメント記号--",
+          "SQLの残り部分をコメントとして扱わせるために使われる構文。"
+        ]
+      ]
+    },
+    {
+      "title": "パスワードスプレー：架空アカウントで認証試行",
+      "english": "Offline Password Spray Simulator",
+      "mins": 65,
+      "desc": "偽アカウント4件に共通の候補を1回ずつ試す。試行上限なしと、単純な回数制限を対照実験する。",
+      "output": "同じ弱い候補を多数の利用者へ分散して試すことと、単純な回数上限による副作用を比べる。簡易制限だけでは最初の一致を防げない。",
+      "limits": "すべて辞書内の架空アカウント。ネットワーク、外部認証、実パスワードの入力、通知送信を行わない。現実の時間窓やIP識別は実装しない。 関数を直接呼び出した場合もprotected/unprotected以外は拒否する。",
+      "terms": [
+        [
+          "スプレー",
+          "同じ少数のパスワード候補を複数のユーザーへ試す。"
+        ],
+        [
+          "クレデンシャル",
+          "認証に使うユーザー名やパスワードなど。ここでは架空のものだけ。"
+        ],
+        [
+          "レート制限",
+          "試行数や速度を制限する防御。"
+        ]
+      ],
+      "steps": [
+        [
+          "完全に架空のアカウントと候補を定義",
+          "入力はプログラム内に固定。実ネットワークへアクセスする仕組みは作らない。"
+        ],
+        [
+          "偽パスワードの照合とループを作る",
+          "辞書を順に処理し、ひとつの候補が誰に一致したか確かめる。"
+        ],
+        [
+          "制限ありの分岐を実装",
+          "LIMIT=2に到達すると、3・4人目をBLOCKEDとして実際には照合しない。"
+        ],
+        [
+          "コマンドで両モードを比較",
+          "試行回数と一致した架空ユーザー名の差を出力する。"
+        ]
+      ],
+      "cuts": [
+        13,
+        23,
+        37
+      ],
+      "trace": [
+        [
+          "候補",
+          "GUESS = BlueFish7",
+          "4人に同じ値を試す。"
+        ],
+        [
+          "1人目",
+          "alice: MATCH",
+          "制限があっても最初の一致を防げない。"
+        ],
+        [
+          "3人目",
+          "carol: MATCH（無制限のみ）",
+          "protectedはLIMIT=2に達した時点で3人目をブロックする。"
+        ],
+        [
+          "4人目",
+          "protected: BLOCKED dave",
+          "制限があると3・4人目の照合はしない。"
+        ]
+      ],
+      "cmd": [
+        "python3 projects/06_spray_simulator.py unprotected",
+        "python3 projects/06_spray_simulator.py protected"
+      ],
+      "experiment": "LIMITを1または3に変えた複製を作り、成功したアカウント数と拒否した人数の違いを比較する（完成版は編集しない）。",
+      "gotcha": "LIMIT=2はアプリ実行中の単純な累計上限であり、時間窓・ユーザー別の制御・送信元IP別の制限ではない。MFAの代用にもならず、上限に達すると正当なユーザーも拒否し得る。",
+      "phase": "認証実験 / Password spray",
+      "purpose": "4つの架空アカウントへ固定の1候補を順番に試し、無制限の試行と簡易制限の違いを比べる。",
+      "attacker": "攻撃者は同じパスワード候補を複数アカウントへ試し、同一アカウントだけの連続失敗制限に頼る弱さを狙うことがある。",
+      "action": "unprotectedとprotectedを実行。4つ目の試行が制限されるかを比較する。実ユーザーや実サービスへの試行機能はない。",
+      "evidence": "無制限では4試行・2件一致、簡易上限では2試行・1件一致。最初の一致を防げず、正当な利用者も巻き添えになり得る。",
+      "mitigation": "MFA・レート制限・異常検知・認証通知・破られたパスワードの排除などを組み合わせる。",
+      "terms_extra": [
+        [
+          "パスワードスプレー",
+          "少数のパスワード候補を複数ユーザーに試す認証攻撃。"
+        ],
+        [
+          "レート制限",
+          "一定期間内の試行数を制限する仕組み。本教材は単純な試行回数上限。"
+        ]
+      ]
+    },
+    {
+      "title": "トークン改ざん：roleをadminへ書き換える",
+      "english": "Signed Token Tampering Lab",
+      "mins": 70,
+      "desc": "固定の教材用鍵で署名した短いトークンを作り、ペイロードだけadminへ書き換え、未検証デコードと正しい署名検証を比較する。",
+      "output": "見えるJSONを変更しても、元の署名は新しい内容を承認しない。デコード成功を信頼に変えてしまう実装が危険。",
+      "limits": "JWT互換ではない教材独自形式、鍵は固定。Base64URLはASCIIのURL安全文字で、パディングなし・正規表現と再符号化による正規形検査を行う。認証済みユーザーの存在、ロールの許可、発行元、期限、鍵管理を検証する本番認証機構ではない。 verifyは署名・最低限の型・長さは点検するが、admin役割の認可はしない。公開済み鍵で署名し直せることを実証する教材である。",
+      "terms": [
+        [
+          "Base64URL",
+          "情報を文字列に符号化する方式。暗号化ではない。"
+        ],
+        [
+          "HMAC",
+          "秘密鍵を使い改ざんを発見するコード。"
+        ],
+        [
+          "未検証デコード",
+          "署名を確認せずペイロードだけ読み、信頼できない内容を表示すること。"
+        ]
+      ],
+      "steps": [
+        [
+          "符号化・署名・教材用鍵を定義",
+          "パディングなしBase64URLの文字集合・正規形を検査し、HMAC-SHA256の原理を確認する。"
+        ],
+        [
+          "トークンを作って内容を直接書き換える",
+          "inspect_untrustedで読むだけの処理とtamperでroleを変更する処理を作る。"
+        ],
+        [
+          "サーバー側を想定した署名検証を追加",
+          "署名とデータの対応を調べ、不一致ならペイロードの権限を採用しない。"
+        ],
+        [
+          "create/tamper/inspect/verifyを完成",
+          "各モードを一つのCLIへまとめ、改ざん前後の違いを検証する。"
+        ]
+      ],
+      "cuts": [
+        28,
+        56,
+        74
+      ],
+      "trace": [
+        [
+          "作成",
+          "user=alice / role=viewer",
+          "元のトークンは検証できる。"
+        ],
+        [
+          "書換",
+          "role=admin",
+          "Base64の中身を変えるが署名は再計算しない。"
+        ],
+        [
+          "未検証",
+          "UNTRUSTED user=alice role=admin",
+          "中身が読めても正当性は認められない。"
+        ],
+        [
+          "署名検証",
+          "INVALID: signature mismatch",
+          "変更されたペイロードと旧署名は一致しない。"
+        ]
+      ],
+      "cmd": [
+        "TOKEN=$(python3 projects/07_signed_token.py create alice viewer)",
+        "FORGED=$(python3 projects/07_signed_token.py tamper \"$TOKEN\" admin)",
+        "python3 projects/07_signed_token.py inspect \"$FORGED\"",
+        "python3 projects/07_signed_token.py verify \"$FORGED\""
+      ],
+      "experiment": "同じTOKENに対してverifyを実行しVALIDになるのを確認。FORGEDでは最後の検証だけ1で終了する。",
+      "gotcha": "inspectのUNTRUSTEDは承認や認証の結果ではない。固定鍵が公開されている教材を本番トークンとして利用しない。",
+      "phase": "セッション操作 / Token tampering",
+      "purpose": "自作の署名付きトークンのroleフィールドを書き換え、検証しない表示とHMAC検証の違いを実験する。",
+      "attacker": "攻撃者はトークンをデコードして権限を書き換え、署名やMACを検証しない実装が内容を信頼しないか試す。",
+      "action": "createでviewerトークンを生成しtamperでadminに変更。inspectではUNTRUSTED admin、verifyではINVALIDになる。",
+      "evidence": "改ざん後のroleがadminと読めても認証成功ではない。元の署名と新ペイロードが一致しないためverifyは失敗する。",
+      "mitigation": "利用前に署名を検証し、受理するフィールド・期限・発行元などを確認する。Base64のデコードは信頼性の証明ではない。",
+      "terms_extra": [
+        [
+          "ペイロード",
+          "トークン本体の内容。ここではユーザーと権限を表すJSON。"
+        ],
+        [
+          "HMAC",
+          "秘密鍵とハッシュ関数を用いてデータの完全性を検証する仕組み。"
+        ]
+      ]
+    },
+    {
+      "title": "IDOR検証：他人の文書IDへ変更してみる",
+      "english": "IDOR Object Access Test",
+      "mins": 55,
+      "desc": "架空のaliceがbobのnotes文書を指定し、認証だけを見て所有者を無視する実装の欠陥を再現する。",
+      "output": "IDを変えただけで別人の文書にアクセスできるなら、認証とオブジェクト単位の認可を取り違えている。",
+      "limits": "架空ユーザーと文書についてALLOW/DENYを返すだけ。実際のファイルを開かずネット通信もない。 関数を直接呼び出してもsafe/unsafe以外のモード名は拒否する。",
+      "terms": [
+        [
+          "IDOR",
+          "他人のオブジェクトIDを与えたときアクセスを拒否できない問題。"
+        ],
+        [
+          "認証",
+          "本人または主体が誰かを確かめること。"
+        ],
+        [
+          "認可",
+          "本人でも個々の操作が許されるかを判断すること。"
+        ]
+      ],
+      "steps": [
+        [
+          "架空のユーザーと文書を定義",
+          "それぞれの文書の所有者と公開範囲を設定する。"
+        ],
+        [
+          "安全な所有者・ロールの許可条件を作る",
+          "存在しないユーザーや対象は拒否し、許可条件を明示する。"
+        ],
+        [
+          "危険な実装を比較用に追加",
+          "unsafeはユーザーの存在しか見ず、他人の文書でも許してしまう。"
+        ],
+        [
+          "同じ主体・対象・操作を2モードで比較",
+          "結果のALLOW/DENYを一つのコマンドで表示する。"
+        ]
+      ],
+      "cuts": [
+        10,
+        24,
+        33
+      ],
+      "trace": [
+        [
+          "主体",
+          "alice: analyst",
+          "認証済みという架空の前提。"
+        ],
+        [
+          "対象",
+          "notes: owner=bob / private",
+          "aliceには所有権がない。"
+        ],
+        [
+          "unsafe",
+          "alice read notes: ALLOW",
+          "ユーザー名があるだけで文書IDを通す。"
+        ],
+        [
+          "safe",
+          "alice read notes: DENY",
+          "所有者・ロール・操作を照合して拒否する。"
+        ]
+      ],
+      "cmd": [
+        "python3 projects/08_access_matrix.py unsafe alice notes read",
+        "python3 projects/08_access_matrix.py safe alice notes read"
+      ],
+      "experiment": "bob notes editも2モードで比べる。正当な所有者はsafeでも許されるはず。",
+      "gotcha": "簡単に推測できるID自体が問題の本質ではない。推測しにくいIDでも、認可チェックが欠ければ問題は残る。",
+      "phase": "認可実験 / IDOR",
+      "purpose": "ログイン済みの想定ユーザーaliceでbobのnotesを指定し、不十分な認可と所有者検証の結果差を調べる。",
+      "attacker": "攻撃側はオブジェクト識別子を他人のものへ変更し、操作ごとに認可が行われているかを確認する。",
+      "action": "unsafe alice notes readならALLOW、safeで同じ操作を試すとDENYになる。実際のファイルや外部アカウントへはアクセスしない。",
+      "evidence": "他人の識別子を入力しただけで許可されるのは、認証の有無と個別文書の認可を混同した結果。",
+      "mitigation": "すべてのリソース操作で主体・対象・動作を照合する。識別子を推測しにくくするだけでは不十分。",
+      "terms_extra": [
+        [
+          "IDOR",
+          "Insecure Direct Object Reference。対象IDを切り替え他人のデータにアクセスできる問題の典型。"
+        ],
+        [
+          "水平権限昇格",
+          "同じ利用者階層に属する別人の情報を利用できてしまうこと。"
+        ]
+      ]
+    },
+    {
+      "title": "パケット偵察：PCAPから通信先を抽出する",
+      "english": "Offline PCAP Summary",
+      "mins": 75,
+      "desc": "合成したClassic PCAPファイルを標準ライブラリのstructだけで読み、Ethernet→IPv4→TCP/UDPの送信元・宛先IP/ポートを表示する。",
+      "output": "パケットキャプチャは単なる「通信の一覧」ではなくバイト列。ヘッダーのサイズとバイトオーダーを正しく解釈して初めて通信情報になる。",
+      "limits": "Classic PCAPのマイクロ秒精度・Ethernet・IPv4・先頭フラグメント無し・TCP/UDPに限定。VLAN、IPv6、PCAPNG、再構成やペイロード解析は実装しない。サンプルは合成で実機通信を記録したものではない。 snaplen・TCP data offset・UDP Lengthを基本検査する一方、IP/TCP/UDPチェックサムは評価しない。 UDP Lengthは非断片化IPv4データグラム内のトランスポート長と一致する必要がある。マイクロ秒タイムスタンプの下位値も範囲検査する。",
+      "terms": [
+        [
+          "PCAP",
+          "キャプチャファイルのヘッダーと各パケット長・データを含むバイナリ形式。"
+        ],
+        [
+          "struct.unpack",
+          "指定したバイト順とサイズでバイト列から数値を取り出す関数。"
+        ],
+        [
+          "エンディアン",
+          "複数バイトの数値をどの順で並べるかという規則。"
+        ]
+      ],
+      "steps": [
+        [
+          "パケットのバイナリ形式を準備",
+          "IPアドレスやバイト順を扱う標準ライブラリを読み込む。"
+        ],
+        [
+          "Ethernet / IP / TCP・UDPヘッダーを調べる",
+          "外側のIPv4全長とTCP data offset、UDP Lengthを照合する。UDP Lengthが小さ過ぎる場合だけでなく、IPv4内容より短く宣言された場合も拒否する。"
+        ],
+        [
+          "classic PCAPのファイル構造を読む",
+          "classic PCAPのマジック値、snaplen、レコード長、マイクロ秒値の範囲を検査する。"
+        ],
+        [
+          "CLIで各パケットの結果を出す",
+          "SKIP理由とIP/portの表示を照合し、終了状態を確認する。"
+        ]
+      ],
+      "cuts": [
+        7,
+        42,
+        74
+      ],
+      "trace": [
+        [
+          "グローバル先頭",
+          "d4 c3 b2 a1",
+          "Classic PCAPでlittle-endianと判定。"
+        ],
+        [
+          "EtherType",
+          "08 00",
+          "Ethernet内にIPv4がある。"
+        ],
+        [
+          "IPv4 protocol",
+          "17",
+          "10進数17はUDPを示す。"
+        ],
+        [
+          "ポート",
+          "53000 → 53",
+          "UDPの先頭4バイトをネットワークバイト順で読む。"
+        ],
+        [
+          "UDP Length",
+          "IPv4 transport lengthに一致",
+          "非断片化パケットでは、長さの不一致をSKIPする。"
+        ]
+      ],
+      "cmd": [
+        "python3 projects/09_pcap_summary.py samples/synthetic_traffic.pcap"
+      ],
+      "experiment": "サンプルのコピーを作り最後の1バイトを削除すると、captured lengthが実データ長を超えエラーになる。元ファイルは直接壊さない。",
+      "gotcha": "キャプチャ長を信用して切り出すと不正ファイルで範囲外を読んだり誤認識したりする。Pythonでも長さを毎段確認する必要がある。",
+      "phase": "通信観察 / Packet analysis",
+      "purpose": "自作の合成classic PCAPを読み、送信元・宛先IPとTCP/UDPポート番号を取り出す。",
+      "attacker": "攻撃前の偵察ではトラフィック情報から通信先やサービスを推測することがある。本作品は保存済み架空パケットに限定する。",
+      "action": "synthetic_traffic.pcapからUDPとTCPの2つのレコードを表示し、192.0.2.0/24のアドレスが例示用であることを確認する。",
+      "evidence": "Packet 1/2の通信方向とRecords: 2。アプリの中身や機密情報を読めたことを意味しない。",
+      "mitigation": "ネットワーク分離・必要最小限の通信許可・暗号化・監視などを適切に組み合わせる。",
+      "terms_extra": [
+        [
+          "PCAP",
+          "キャプチャ済みパケットを保存する形式。"
+        ],
+        [
+          "EtherType",
+          "Ethernetフレームが運ぶ上位プロトコルを示す識別値。"
+        ]
+      ]
+    },
+    {
+      "title": "HTTPフレーミング偵察：曖昧な要求を分析する",
+      "english": "HTTP Request Framing Review",
+      "mins": 60,
+      "desc": "保存したHTTP/1.1リクエストのヘッダー部分を読み、Content-LengthとTransfer-Encodingの矛盾や重複を静的に指摘する。",
+      "output": "HTTPの境界を別々の機器が違う方法で決めると危険な状況が生じる。複雑なHTTPパーサーを書く代わりに、まず曖昧なケースを認識する。",
+      "limits": "HTTPの完全なパーサーではなく、送信・中継も行わない。CRLFを厳格に要求する教育用チェック。Transfer-Encodingを見つけた場合は、chunked本文の実際の長さ・終端・トレーラーを検証せず、その未検証を必ずREVIEWとして示す。CL/TEなしで本文に余分なバイトがある場合もREVIEW。保存ファイルが完全な1要求である場合だけContent-Lengthと残りの本文バイト数を比較。request-targetの空白・制御文字・非ASCIIバイトは厳格な教材基準で拒否する。",
+      "terms": [
+        [
+          "Content-Length",
+          "メッセージボディのバイト数を指定するヘッダー。"
+        ],
+        [
+          "Transfer-Encoding",
+          "chunkedなどメッセージを転送するときの形式を示すヘッダー。"
+        ],
+        [
+          "CRLF",
+          "改行を表す2バイト（\r\n）。HTTP/1.1のテキスト形式の行区切りに使う。"
+        ]
+      ],
+      "steps": [
+        [
+          "HTTPのバイト列を扱う準備",
+          "文字列ではなくbytesでヘッダーと本文を識別する。"
+        ],
+        [
+          "要求行とヘッダー形式を厳格に読む",
+          "ヘッダーの不正改行・制御文字・要求ターゲットの非ASCII/制御文字を拒否する。"
+        ],
+        [
+          "Host・CL・TEの競合を判定する",
+          "Host/CL/TEを比較し、未検証のchunked本文と長さ指定なしの余分なバイトをREVIEWに含める。"
+        ],
+        [
+          "ファイル入力とエラー表示を完成する",
+          "保存された1要求だけを読む教材の制約を守り、CLIから検査する。"
+        ]
+      ],
+      "cuts": [
+        8,
+        33,
+        59
+      ],
+      "trace": [
+        [
+          "入力",
+          "Content-Length: 4",
+          "本文の長さを表すフィールドがある。"
+        ],
+        [
+          "入力",
+          "Transfer-Encoding: chunked",
+          "転送形式も別途指定されている。"
+        ],
+        [
+          "判定",
+          "transfers and lengths → True",
+          "異なるフレーミング方法が併存する。"
+        ],
+        [
+          "結果",
+          "REVIEW Transfer-Encoding with Content-Length",
+          "不整合の兆候を報告。通信は送らない。"
+        ]
+      ],
+      "cmd": [
+        "python3 projects/10_framing_review.py samples/request_ambiguous.http",
+        "python3 projects/10_framing_review.py samples/request_simple.http"
+      ],
+      "experiment": "request_ambiguous.httpを別名へコピーし、Content-Length行を削除して再実行する。Transfer-Encodingの本文はこの教材では未検証なので、警告が消えたとしてもリクエストの有効性を証明しない。さらにCL/TEのない要求へ余分な本文を追加すると、新たなREVIEWが出ることを確認する。",
+      "gotcha": "「警告なし」は「HTTPの仕様を完全に満たす」ではない。特にTransfer-Encoding: chunkedの本文を実際に解析していない状態で問題なしと表示しないよう、未検証のREVIEWを出す。CL/TEなしで後続バイトがある場合も同様。寛容なHTTPサーバーの挙動やRFCのLF許容を模倣しない。桁数が大きいContent-Lengthはint前に制限する。",
+      "phase": "プロトコル研究 / HTTP framing",
+      "purpose": "同梱のHTTP/1.1リクエストを解析し、Content-LengthとTransfer-Encodingが競合する場合をオフラインで発見する。",
+      "attacker": "攻撃側は中継装置ごとにリクエスト境界の解釈が異なる条件を探す。警告を見つけたことと実際のリクエストスマグリング成立は別。",
+      "action": "request_ambiguous.httpとrequest_simple.httpの検査結果を比較。通信先へリクエストは送信しない。",
+      "evidence": "曖昧サンプルではREVIEW、単純サンプルではNo basic framing conflict。脆弱性の実証やプロキシ挙動の再現ではない。",
+      "mitigation": "一貫したHTTPメッセージ処理、正規化と曖昧要求の拒否、中継装置の設定点検を検討する。",
+      "terms_extra": [
+        [
+          "リクエストスマグリング",
+          "HTTP要求の境界を異なるコンポーネントが違って解釈することで生じる攻撃群。"
+        ],
+        [
+          "フレーミング",
+          "HTTPメッセージの開始と終了をどのように区切るかという規則。"
+        ]
+      ]
+    }
+  ],
+  "notes": {
+    "1": [
+      [
+        "if not fields:",
+        "空ファイルやヘッダーが無い入力から安全性を判断せず、理由付きの入力エラーとして停止します。"
+      ],
+      [
+        "data = path.read_bytes().decode",
+        "保存された内容をバイト列で読み、明示的にUTF-8へ変換します。テキストファイルの自動改行変換による単独CRの見落としを避けます。"
+      ],
+      [
+        "if \"\\r\" in data.replace",
+        "CRLFの組を除いた後にもCRが残れば、単独CRが含まれるため不正と判断します。"
+      ],
+      [
+        "if not re.fullmatch(r\"HTTP/1",
+        "教材で許すHTTP/1.0またはHTTP/1.1の状態行と3桁のステータス番号か確認します。"
+      ],
+      [
+        "data.replace(\"\\r\\n\", \"\\n\")",
+        "保存されたCRLFをLFへそろえた上で行に分割します。冒頭で単独CRを除外済みです。"
+      ],
+      [
+        "if raw == \"\":",
+        "最初の空行はヘッダー部の終了を示すため、breakで読み取りを止めます。本文をヘッダーとして誤解析しません。"
+      ],
+      [
+        "any(ord(ch) < 32",
+        "ヘッダー値の制御文字を検出します。HTAB（タブ）以外のASCII制御文字やDELを拒否します。"
+      ],
+      [
+        "any(csp)",
+        "CSPが存在しても値が空の場合には保護機能の実施を判断できません。空文字はFalseとして扱われます。"
+      ],
+      [
+        "any(referrer)",
+        "Referrer-Policyが空値なら「設定済みで有効」とは言えません。リスト内に非空文字列があるか調べます。"
+      ],
+      [
+        "any(sts)",
+        "HSTSの値が空欄ならmax-ageが読み取れません。HTTPS時だけ存在と中身の確認を促します。"
+      ],
+      [
+        "name != \"set-cookie\"",
+        "同じ名前のヘッダーが複数あるか調べる。ただしSet-Cookieの複数行は通常の仕組みなので一律の重複警告から除く。"
+      ],
+      [
+        "Multiple Set-Cookie",
+        "Set-Cookieを単一行に結合しないことを示すコメント。Cookieは複数個を別々のフィールド行で渡せる。"
+      ],
+      [
+        "path.stat().st_size",
+        "statで読む前にサイズを確かめる。大きな入力を無制限に処理しない入口の制約。"
+      ],
+      [
+        "fields = {}",
+        "辞書でヘッダー名から値のリストを引く。リストにするのは重複を消さないため。"
+      ],
+      [
+        "raw.startswith(\"HTTP/\")",
+        "レスポンスのステータス行をヘッダーと誤解しない。"
+      ],
+      [
+        "re.fullmatch",
+        "フィールド名に許容するHTTPトークン文字だけが並ぶかを正規表現で厳密に確かめる。"
+      ],
+      [
+        "enumerate(path.read_text",
+        "行番号を1から数え、先頭行にだけHTTPのステータス行を認める。"
+      ],
+      [
+        "raw[0].isspace()",
+        "先頭空白の行はこの教材では曖昧な折り畳み行として拒否する。"
+      ],
+      [
+        "raw.split(\":\", 1)",
+        "最初のコロンだけで名前と値を分ける。値の中のコロンは残す。"
+      ],
+      [
+        "setdefault",
+        "名前が初めてなら空のリストを用意し、そこへ値を追記する。"
+      ],
+      [
+        "if len(values) > 1",
+        "同じ名前が複数回あることを調査対象として表示する。"
+      ],
+      [
+        "csp =",
+        "CSPをリストで取り出す。存在を確認するだけでは内容の強さは判断できない。"
+      ],
+      [
+        "nosniff[0].lower()",
+        "単一のX-Content-Type-Optionsがnosniffという値かを確かめる。"
+      ],
+      [
+        "if scheme == \"https\"",
+        "HSTSはHTTPSの文脈に限定して評価する。"
+      ]
+    ],
+    "2": [
+      [
+        "saved = path.read_bytes()",
+        "Cookieサンプルをまずbytesとして読み、その後UTF-8のstrへ明示変換します。テキスト読み込みの改行変換で単独CRが消えるのを防ぎます。"
+      ],
+      [
+        "if \"\\r\" in saved.replace",
+        "CRLFを一時的に取り除いてからCRが残るか調べ、単独CRによるヘッダー行の紛れ込みを入力エラーとして拒否します。"
+      ],
+      [
+        "lines = [line for line in saved.replace",
+        "CRLFをLFへ統一し、LFだけで分割します。空白だけの行は除外します。入力が何行かを把握する工程です。"
+      ],
+      [
+        "value.startswith",
+        "値の先頭と末尾のダブルクォートが片側だけの場合に拒否します。引用符が1個しかない値も不正です。"
+      ],
+      [
+        "plain_value =",
+        "両端の引用符がそろっている場合にだけ除き、内部のcookie-octetを次行で検査します。"
+      ],
+      [
+        "COOKIE_NAME =",
+        "Cookie名に使用できるtoken文字の並びを正規表現で定義する。名前の中に空白があるものは拒否する。"
+      ],
+      [
+        "re.fullmatch(COOKIE_NAME",
+        "Cookie名または属性名の全体が許可された文字だけで構成されているか調べる。部分一致ではなく全文一致にする。"
+      ],
+      [
+        "plain_value =",
+        "引用符で囲まれた場合は外側の引用符だけ除き、実際に検査するCookie値へ変える。"
+      ],
+      [
+        "ch.isascii()",
+        "Cookie値を1文字ずつ見て、ASCII以外・制御文字・カンマ・バックスラッシュなどの禁止文字を拒否する。"
+      ],
+      [
+        "unexpected {flag} flag value",
+        "Secure=0などの非標準的な書き方に注意を促す。多くのブラウザーでは値ではなく属性の存在で有効になる。"
+      ],
+      [
+        "Browsers treat Secure",
+        "RFC 6265のCookie処理ではSecureに値が付いていてもSecure属性として扱うという注意書き。"
+      ],
+      [
+        "secure_present =",
+        "キーが辞書にあるかをboolで調べる。Secure=0でも存在は真で、記載様式の警告とは別判定にする。"
+      ],
+      [
+        "parts =",
+        "セミコロンで区切り、各属性の前後の空白を取り除く。"
+      ],
+      [
+        "name, value =",
+        "最初の等号だけでCookie名と値を分ける。"
+      ],
+      [
+        "attrs = {}",
+        "属性名から設定値を引けるよう辞書を準備する。"
+      ],
+      [
+        "key, _, setting =",
+        "等号のないSecureのようなフラグでも扱えるpartitionを使う。"
+      ],
+      [
+        "if not key or key in attrs",
+        "空の属性名や重複する属性名を拒否し、曖昧な入力を正常として扱わない。"
+      ],
+      [
+        "for flag in",
+        "SecureとHttpOnlyを同じ処理で検査する。"
+      ],
+      [
+        "same_site =",
+        "大文字小文字の差をなくして属性値を比較する。"
+      ],
+      [
+        "same_site == \"none\"",
+        "SameSite=NoneのときにSecureの有無を追加確認する。"
+      ],
+      [
+        "name.startswith(\"__Host-\")",
+        "__Host-接頭辞はPath=/とDomainなしも条件になる。"
+      ]
+    ],
+    "3": [
+      [
+        "len(sys.argv[2]) > 8",
+        "ポート番号は整数へ変換する前に最大8文字へ制限します。数字列の極端な長さによる無駄な変換を防ぎ、その後にASCIIの十進数字と1〜65535の範囲を検査します。"
+      ],
+      [
+        "except OSError:",
+        "TCP接続後にrecvが失敗しても、接続自体が成功した事実は取り消さずOPENに保ちます。"
+      ],
+      [
+        "banner = \"(banner read failed)\"",
+        "バナー受信エラーを明記し、バナーがない場合や接続拒否と区別します。"
+      ],
+      [
+        "reply = client.recv(64)",
+        "接続相手から最大64バイト受信し、結果をbytes型のreplyに入れる。受信ゼロバイトは相手が正常に接続を閉じたことを示す。"
+      ],
+      [
+        "banner = reply.decode",
+        "replyが空でなければASCIIへ変換して前後の空白を除去し、空なら接続されたまま相手が閉じたことを表示する。"
+      ],
+      [
+        "if banner:",
+        "取得できたバナーが空文字でない場合に限って表示する。表示の有無で接続結果の終了ステータスは変更しない。"
+      ],
+      [
+        "return 0 if status == \"OPEN\" else 1",
+        "checkモードではTCP接続が成功してOPENなら0、接続拒否などでは1を返す。バナーの有無で0へ抜けることはない。"
+      ],
+      [
+        "# A TCP check succeeds",
+        "checkモードの終了条件を記した英語コメント。demoモードとは成功の基準が異なる。"
+      ],
+      [
+        "status == \"OPEN\" and banner",
+        "デモ用サーバーへTCP接続でき、想定の文字列を取得できた場合だけ成功0を返す。条件外は1。"
+      ],
+      [
+        "HOST =",
+        "検査対象を自分自身のIPに固定し、第三者のホストを指定できなくする。"
+      ],
+      [
+        "socket.create_connection",
+        "TCP接続を試し、0.5秒でタイムアウトする。"
+      ],
+      [
+        "client.recv(64)",
+        "最大64バイトまで受信。プロトコル認識や全メッセージの受信ではない。"
+      ],
+      [
+        "except socket.timeout",
+        "接続済みでもバナーがない場合に固まらないようにする。"
+      ],
+      [
+        "except OSError",
+        "接続拒否と通信に失敗した事象をまとめて報告する。"
+      ],
+      [
+        "except OSError as exc",
+        "環境でTCPソケットを使えない場合もトレースバックを出さず原因を知らせる。"
+      ],
+      [
+        "server.bind((HOST, 0))",
+        "ポート番号0はOSへ未使用のポート割り当てを依頼する。"
+      ],
+      [
+        "server.listen(1)",
+        "接続待ちを開始し、待機キューの目安を1にして短い教材用サーバーにする。"
+      ],
+      [
+        "server.accept()",
+        "一度の接続を受け付ける教育用サーバー。"
+      ],
+      [
+        "threading.Thread",
+        "待受と検査を同じプロセス内で同時に進める。"
+      ],
+      [
+        "port < 1",
+        "TCP/UDPポートの有効な範囲だけを許可する。"
+      ]
+    ],
+    "4": [
+      [
+        "SAMPLES =",
+        "教材全体のsamplesディレクトリを固定し、unsafeモードでも実機の別領域へ読みに行かない。"
+      ],
+      [
+        "ROOT =",
+        "仮想的な公開ルートwebroot。secret.txtは意図的にこの外に置く。"
+      ],
+      [
+        "unquote",
+        "%2e%2e%2fを../へ戻すURLデコード。"
+      ],
+      [
+        "Path(decoded).is_absolute()",
+        "絶対パスを両モードで拒否し、サンプルの学習範囲に収まる相対パスだけを処理する。"
+      ],
+      [
+        "base =",
+        "公開ルートの実体パスを取得する。"
+      ],
+      [
+        "target =",
+        "引数の../やシンボリックリンクを解決したパスを求める。"
+      ],
+      [
+        "not target.is_relative_to(SAMPLES",
+        "unsafeでも教材のsamplesフォルダーの外に出さない安全制限。"
+      ],
+      [
+        "mode == \"safe\"",
+        "safeのときだけ「webrootの中か」を厳密に検査する。比較実験の中心。"
+      ],
+      [
+        "target.is_file()",
+        "存在する小さな通常ファイルだけを読み込む。"
+      ],
+      [
+        "target = choose",
+        "指定モードで候補パスを判定し、許可されたPathを受け取る。"
+      ],
+      [
+        "target.read_text",
+        "返されたファイルのテキストを表示する。unsafeでは教材のsecret.txtの内容も出る。"
+      ]
+    ],
+    "5": [
+      [
+        "sqlite3.connect(\":memory:\")",
+        "ファイルへ残さない一時データベース。外部DBは使わない。"
+      ],
+      [
+        "closing(",
+        "with終了時に接続自体をcloseする。sqlite3の通常のwithだけでは接続は閉じない。"
+      ],
+      [
+        "CREATE TABLE",
+        "検証用のaccountテーブルを定義する。"
+      ],
+      [
+        "executemany",
+        "同じINSERTを2件の行に対して実行する。"
+      ],
+      [
+        "query = \"SELECT",
+        "?がSQLの構造と値を分けるプレースホルダーになる。"
+      ],
+      [
+        "db.execute(query, (name,))",
+        "タプル(name,)として渡すと入力文字列はSQL構文へ展開されない。"
+      ],
+      [
+        "query = f",
+        "意図的な危険例。文字列がSQLの引用符・演算子として解釈され得る。"
+      ],
+      [
+        "db.execute(query).fetchall()",
+        "危険な連結後のSQLを評価する。学習用メモリDBだけ。"
+      ],
+      [
+        "return [row[0]",
+        "SELECTの行タプルからユーザー名だけを取り出す。"
+      ]
+    ],
+    "6": [
+      [
+        "ACCOUNTS =",
+        "本人や会社と無関係な架空ユーザーの辞書。"
+      ],
+      [
+        "\"alice\":",
+        "aliceの架空パスワードをセットする。"
+      ],
+      [
+        "\"bob\":",
+        "bobは共通候補と異なる値を持つ。"
+      ],
+      [
+        "\"carol\":",
+        "carolはaliceと同じ値を持つ脆弱な教材設定。"
+      ],
+      [
+        "\"dave\":",
+        "daveの値も共通候補とは異なる。"
+      ],
+      [
+        "GUESS =",
+        "攻撃側の候補は1種類に固定する。"
+      ],
+      [
+        "LIMIT =",
+        "保護モードの最大試行数。時間窓ではないことに注意。"
+      ],
+      [
+        "return ACCOUNTS.get",
+        "辞書からユーザーの値を取得し、候補と等しいか調べる。"
+      ],
+      [
+        "attempts =",
+        "ここまで試した回数を数える整数の初期値。"
+      ],
+      [
+        "successes =",
+        "一致した架空アカウント名を蓄積する空のリスト。"
+      ],
+      [
+        "for user in",
+        "4件の辞書キーを順番に取り出して同じ候補を試す。"
+      ],
+      [
+        "mode == \"protected\"",
+        "保護モードかつ上限に達したら照合せず拒否する。"
+      ],
+      [
+        "continue",
+        "このユーザーに対するパスワード照合を飛ばし、次のユーザーへ進む。"
+      ],
+      [
+        "attempts += 1",
+        "ブロックされず実際に照合した回数を1増やす。"
+      ],
+      [
+        "match =",
+        "固定候補がこの架空ユーザーに一致するか照合する。"
+      ],
+      [
+        "successes.append",
+        "一致した場合だけ一覧へユーザー名を追加する。"
+      ],
+      [
+        "simulate(sys.argv",
+        "選んだモードで架空の試行を開始する。"
+      ]
+    ],
+    "7": [
+      [
+        "import re",
+        "Base64URLで利用する文字を正規表現で検査するための標準モジュールを読み込みます。"
+      ],
+      [
+        "if not value or not re.fullmatch",
+        "Base64URLの値が空、許可外の文字を含む、または長さが4で割って1余る場合は、復号前に拒否します。"
+      ],
+      [
+        "decoded = base64.b64decode",
+        "URL安全文字と不足分だけの=を使って、入力をbytesへ復号します。この時点では署名の正しさは確認していません。"
+      ],
+      [
+        "if encode(decoded) != value:",
+        "復号後に自分のencodeで再符号化し、入力と一致するか確認します。同じbytesを別表記した非正規形を拒否します。"
+      ],
+      [
+        "raise ValueError(\"non-canonical",
+        "別表記のBase64URLは入力形式エラーとして拒否します。署名検証の成功とは別の入力検査です。"
+      ],
+      [
+        "return decoded",
+        "規定の形式で復号できたbytesを呼び出し元へ渡します。"
+      ],
+      [
+        "LAB_KEY =",
+        "デモ専用の共有秘密鍵。この値を実際の認証に使わない。"
+      ],
+      [
+        "urlsafe_b64encode",
+        "バイト列をURLに使える文字の列へ変える。暗号化とは異なる。"
+      ],
+      [
+        "base64.b64decode",
+        "Base64URLをバイト列に戻す。validate=Trueで不正な文字を拒否する。"
+      ],
+      [
+        "hmac.new",
+        "鍵とメッセージを使ってHMAC-SHA256を生成する。"
+      ],
+      [
+        "sort_keys=True",
+        "ユーザー情報を同じ並びに固定して署名対象の違いを無くす。"
+      ],
+      [
+        "return encoded +",
+        "ペイロード部分と署名部分をドットで結ぶ。"
+      ],
+      [
+        "payload_part = token.split",
+        "トークンの左側だけを取り出す。ここでは署名を確認しない。"
+      ],
+      [
+        "return json.loads(decode(payload_part)",
+        "Base64を戻してJSONを読む。結果は信頼できない。"
+      ],
+      [
+        "payload = inspect_untrusted(token)",
+        "改ざん用に元の値を読み込む。本人確認には使わない。"
+      ],
+      [
+        "payload[\"role\"] =",
+        "攻撃側の操作：権限名だけを書き換える。"
+      ],
+      [
+        "changed =",
+        "書き換えた辞書を再び同じ形式のJSON文字列へ変換する。"
+      ],
+      [
+        "return encode(changed",
+        "変更したデータに古い署名をそのまま付ける。"
+      ],
+      [
+        "hmac.compare_digest",
+        "正しい署名と受け取った署名を慎重に比較する。"
+      ],
+      [
+        "payload_part, signature_part",
+        "トークンをデータと署名に分解する。"
+      ],
+      [
+        "args =",
+        "スクリプト名を除くコマンド引数の一覧を得る。"
+      ],
+      [
+        "args[0] == \"tamper\"",
+        "改ざんモードと操作対象のロールを確認する。"
+      ],
+      [
+        "args[0] in (\"inspect\", \"verify\")",
+        "信頼しない表示と、署名検証を対比できる。"
+      ],
+      [
+        "\"UNTRUSTED\"",
+        "未検証を示し、実際の権限判定と取り違えない表示にする。"
+      ]
+    ],
+    "8": [
+      [
+        "ROLES =",
+        "架空のユーザーと役割の対応を作る。"
+      ],
+      [
+        "DOCS =",
+        "架空文書のownerとscopeを定義する辞書の開始。"
+      ],
+      [
+        "\"report\":",
+        "report文書の所有者はalice、共有範囲はteam。"
+      ],
+      [
+        "\"notes\":",
+        "notes文書の所有者はbob、公開範囲はprivate。"
+      ],
+      [
+        "ROLES.get(actor)",
+        "ユーザーが辞書にない場合はNoneになる。"
+      ],
+      [
+        "DOCS.get(document)",
+        "指定文書がなければNoneとなる。"
+      ],
+      [
+        "role is None",
+        "不明ユーザー、対象、操作をすべて拒否する。"
+      ],
+      [
+        "role == \"admin\"",
+        "教材規則の管理者に許可を与える。"
+      ],
+      [
+        "target[\"owner\"] == actor",
+        "文書の所有者本人に許可を与える。"
+      ],
+      [
+        "role == \"analyst\"",
+        "公開範囲がteamの文書に限り、analystのreadを許可する。"
+      ],
+      [
+        "if mode == \"unsafe\"",
+        "不備のある実装をわざと選ぶための分岐。"
+      ],
+      [
+        "return actor in ROLES",
+        "ユーザーの存在だけで許可を判断し、所有者を見ないというバグ。"
+      ],
+      [
+        "return permitted",
+        "safeでは3要素（主体・文書・操作）を厳密に照合する。"
+      ],
+      [
+        "allowed =",
+        "選んだモードの判定結果をboolで受け取る。"
+      ]
+    ],
+    "9": [
+      [
+        "_, micros, caplen, original",
+        "PCAPのレコードヘッダーを読み、タイムスタンプ秒数は使わず、マイクロ秒部分・保存長・元の長さを取得する。"
+      ],
+      [
+        "if micros >= 1_000_000:",
+        "マイクロ秒単位の小数部分は0〜999999の範囲であることを検査する。"
+      ],
+      [
+        "invalid microsecond timestamp",
+        "誤ったマイクロ秒値を見つけたため例外を送出し、データを正常扱いしない。"
+      ],
+      [
+        "transport = ip[",
+        "IPv4のheader_lengthの直後から総パケット長までを取り出す。Ethernetの末尾パディングは含めない。"
+      ],
+      [
+        "tcp_header =",
+        "TCPヘッダーの13バイト目の上位4ビット（data offset）に4を掛け、TCPヘッダー長をバイトで得る。"
+      ],
+      [
+        "tcp_header < 20",
+        "TCPのヘッダー長は最低20バイトで、実際のトランスポート領域を超えてもいけない。"
+      ],
+      [
+        "udp_length =",
+        "UDPのヘッダー内4〜5番目のバイトを、UDP全体の長さとしてネットワークバイト順で読む。"
+      ],
+      [
+        "udp_length < 8",
+        "UDP Lengthは最小8バイトであり、非断片化IPv4データグラム内のトランスポートバイト数と一致しなければ破損扱いにする。"
+      ],
+      [
+        "snaplen, network",
+        "global headerのsnaplenは各レコードで保存できる最大バイト数、networkはリンク種別を示す。"
+      ],
+      [
+        "caplen > snaplen",
+        "各レコードのキャプチャ長がglobal headerのsnaplenを超えないか検査する。"
+      ],
+      [
+        "frame[12:14]",
+        "Ethernetヘッダー12～13バイト目のEtherTypeでIPv4を確認する。"
+      ],
+      [
+        "ip[0] >> 4",
+        "IPv4ヘッダーの先頭4ビットがバージョン番号4か確認する。"
+      ],
+      [
+        "header_length =",
+        "IHLの下位4ビットは4バイト単位なので4倍する。"
+      ],
+      [
+        "packet_length =",
+        "IPヘッダーが示す全長をネットワークバイト順で読む。"
+      ],
+      [
+        "len(ip) < packet_length",
+        "キャプチャが途中で切れていないかを確認する。"
+      ],
+      [
+        "ip[6:8]",
+        "フラグやフラグメント位置がある場合、この単純パーサーでは読み飛ばす。"
+      ],
+      [
+        "struct.unpack(\"!HH\"",
+        "ネットワークバイト順で2バイトポートを2つ読む。"
+      ],
+      [
+        "IPv4Address(",
+        "4バイトを人間が読みやすいドット区切りIPへ変える。"
+      ],
+      [
+        "magic =",
+        "PCAP先頭4バイトのマジック値から形式を判定する。"
+      ],
+      [
+        "order = \"<\"",
+        "classic PCAPの数値をlittle-endianで読む。"
+      ],
+      [
+        "order = \">\"",
+        "classic PCAPの数値をbig-endianで読む。"
+      ],
+      [
+        "transport_min =",
+        "TCPには20バイト、UDPには8バイトの最低限のヘッダー長を要求する。"
+      ],
+      [
+        "packet_length < header_length + transport_min",
+        "IPパケットに必須のTCP/UDPヘッダーが収まらない場合を拒否する。"
+      ],
+      [
+        "offset += caplen",
+        "キャプチャ済みパケットの長さぶん読み取り位置を進め、次レコードへ移る。"
+      ],
+      [
+        "offset += 16",
+        "各パケットのレコードヘッダー分だけ読み取り位置を進める。"
+      ],
+      [
+        "caplen > original",
+        "記録されたキャプチャ長が元の長さや実ファイル長と矛盾しないか確認する。"
+      ]
+    ],
+    "10": [
+      [
+        "if transfers:",
+        "Transfer-Encodingが指定されていれば、後続の本文の実際のchunked構造を検査しないという制約を必ずREVIEWへ記録します。"
+      ],
+      [
+        "notes.append(\"REVIEW Transfer-Encoding body",
+        "chunked本文のサイズ行・終端・トレーラーをこの簡易ツールが確認しないことを表示し、問題なしという誤解を防ぎます。"
+      ],
+      [
+        "if body and not lengths and not transfers:",
+        "本文にバイト列があるのにContent-LengthもTransfer-Encodingもなければ、完全な1要求として解釈する際の曖昧さを警告します。"
+      ],
+      [
+        "notes.append(\"REVIEW extra bytes",
+        "ヘッダーの後ろに無標識の追加バイトがあったことをREVIEWとして記録します。HTTPサーバーへの実送信は行いません。"
+      ],
+      [
+        "if any(byte < 33 or byte > 126",
+        "request-targetを1バイトずつ検査し、空白・制御文字・DEL・未符号化の非ASCIIを教材の厳格なルールで拒否する。"
+      ],
+      [
+        "control or non-ASCII byte in request target",
+        "要求ターゲットに不適切なバイトがあったことをValueErrorとして報告し、本文の解析を続けない。"
+      ],
+      [
+        "len(value) > 12",
+        "Content-Lengthが数字でも非常に長ければintへ変換せず、入力形式の問題としてREVIEWを記録する。"
+      ],
+      [
+        "header_bytes, body =",
+        "最初のCRLF空行でヘッダー節と本文を切り分ける。後半のbytes数はContent-Lengthの比較対象になる。"
+      ],
+      [
+        "any(b\"\\r\" in line",
+        "CRLFで分けたあとに残る単独のCRやLFを拒否する。HTTPの緩い改行解釈の差を避ける教材方針。"
+      ],
+      [
+        "request_parts =",
+        "要求行を半角スペースで区切る。複数空白なら空要素が増えて、後の形式検査で拒否される。"
+      ],
+      [
+        "len(request_parts) != 3",
+        "method、空でないtarget、HTTP/1.1のちょうど3項目であることを検査する。"
+      ],
+      [
+        "any(ch < 32",
+        "フィールド値の制御文字を検査し、通常のHTAB以外の0x00～0x1fやDELを不正とする。"
+      ],
+      [
+        "int(value) != len(body)",
+        "保存した完全な1要求に限り、宣言されたContent-Lengthと保存されている本文の実バイト数を比べる。"
+      ],
+      [
+        "b\"\\r\\n\\r\\n\"",
+        "HTTP/1.1ヘッダーが終わる空行をバイト列で探す。"
+      ],
+      [
+        "header_bytes.split",
+        "改行文字列でヘッダーを各行へ分ける。"
+      ],
+      [
+        "FIELD_CHARS =",
+        "HTTP/1.1のfield-nameに許されるASCIIトークン文字の集合を定義する。"
+      ],
+      [
+        "len(fields.get(b\"host\"",
+        "HTTP/1.1に必要なHostがちょうど1件あり、値が空でないかを確認する。"
+      ],
+      [
+        "any(ch not in FIELD_CHARS",
+        "ヘッダー名に空白や禁止された記号が混じる場合を拒否する。"
+      ],
+      [
+        "lines[0].startswith",
+        "教材で扱うHTTPメソッドとHTTP/1.1の形式に限定する。"
+      ],
+      [
+        "line[:1]",
+        "先頭空白の折り畳みヘッダーはこの簡易実装では拒否する。"
+      ],
+      [
+        "line.split(b\":\", 1)",
+        "最初のコロンだけでヘッダー名と値を分ける。"
+      ],
+      [
+        "fields.setdefault",
+        "重複を消さず同名ヘッダーをリストで保持する。"
+      ],
+      [
+        "len(lengths) > 1",
+        "Content-Lengthの繰り返しを監査項目にする。"
+      ],
+      [
+        "transfers and lengths",
+        "Transfer-EncodingとContent-Lengthの併存を検出する。"
+      ],
+      [
+        "value.isdigit()",
+        "Content-Lengthにマイナスや文字が含まれると警告する。"
+      ]
+    ]
+  },
+  "references": [
+    [
+      "Python 3 Documentation: pathlib",
+      "https://docs.python.org/3/library/pathlib.html"
+    ],
+    [
+      "Python 3 Documentation: socket",
+      "https://docs.python.org/3/library/socket.html"
+    ],
+    [
+      "Python 3 Documentation: sqlite3",
+      "https://docs.python.org/3/library/sqlite3.html"
+    ],
+    [
+      "Python 3 Documentation: hmac",
+      "https://docs.python.org/3/library/hmac.html"
+    ],
+    [
+      "Python 3 Documentation: struct",
+      "https://docs.python.org/3/library/struct.html"
+    ],
+    [
+      "OWASP HTTP Security Response Headers Cheat Sheet",
+      "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html"
+    ],
+    [
+      "OWASP Session Management Cheat Sheet",
+      "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html"
+    ],
+    [
+      "OWASP SQL Injection Prevention Cheat Sheet",
+      "https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html"
+    ],
+    [
+      "RFC 9110: HTTP field-name syntax",
+      "https://www.rfc-editor.org/rfc/rfc9110.html"
+    ],
+    [
+      "RFC 6265: HTTP Cookie State Management",
+      "https://www.rfc-editor.org/rfc/rfc6265.html"
+    ],
+    [
+      "RFC 791: IPv4 header",
+      "https://www.rfc-editor.org/rfc/rfc791.html"
+    ],
+    [
+      "RFC 9112: HTTP/1.1 (message framing)",
+      "https://www.rfc-editor.org/rfc/rfc9112.html"
+    ],
+    [
+      "Python 3 Documentation: json",
+      "https://docs.python.org/3/library/json.html"
+    ]
+  ]
+}

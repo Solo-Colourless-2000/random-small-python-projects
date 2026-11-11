@@ -1,0 +1,15 @@
+2026-11-11 | Regression verification
+Existing tests (tests/run_groups.py):
+Group 1: 35 PASS
+Group 2: 15 PASS
+Group 3: 16 PASS
+Group 4: 33 PASS
+Total existing: 99 PASS, 0 FAIL
+New tests (tests/test_revision.py): 10 PASS, 0 FAIL
+Python test total: 109 PASS, 0 FAIL
+HTML verification: 1982 checks, 0 FAIL
+Example commands: 10/10 reproduced
+Browser interactions: 19/19 PASS
+Responsive viewport checks: 72/72 small, 69/69 large
+New additional 36 focused rounds: 36/36 PASS
+See JSON logs and scripts for reproducible checks and limitations.

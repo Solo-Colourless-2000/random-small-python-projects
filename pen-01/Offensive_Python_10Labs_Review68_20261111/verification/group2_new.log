@@ -1,0 +1,18 @@
+TEST_GROUP=2 TEST_METHODS=15
+...............
+----------------------------------------------------------------------
+Ran 15 tests in 15.647s
+
+OK
+ATTEMPT alice: MATCH
+ATTEMPT bob: NO MATCH
+ATTEMPT carol: MATCH
+ATTEMPT dave: NO MATCH
+Attempts: 4
+Matched fake accounts: alice, carol
+ATTEMPT alice: MATCH
+ATTEMPT bob: NO MATCH
+BLOCKED carol: lab-wide attempt cap
+BLOCKED dave: lab-wide attempt cap
+Attempts: 2
+Matched fake accounts: alice

@@ -1,0 +1,462 @@
+{
+  "environment": "Chromium headless set_content, viewport 820px high; code/table inner horizontal scroll permitted",
+  "group": "small",
+  "checks": [
+    {
+      "check": "320: cover fits without page overflow",
+      "pass": true,
+      "observation": {
+        "vp": 320,
+        "body": 320,
+        "main": 320,
+        "head": 125.578125
+      }
+    },
+    {
+      "check": "320: main fits screen",
+      "pass": true,
+      "observation": 320
+    },
+    {
+      "check": "320: header is compact",
+      "pass": true,
+      "observation": 125.578125
+    },
+    {
+      "check": "320: cover cards are not narrower than 100px",
+      "pass": true,
+      "observation": null
+    },
+    {
+      "check": "320: p01 section navigation",
+      "pass": true,
+      "observation": {
+        "scroll": 320,
+        "active": "p01"
+      }
+    },
+    {
+      "check": "320: p01 no body overflow",
+      "pass": true,
+      "observation": {
+        "scroll": 320,
+        "active": "p01"
+      }
+    },
+    {
+      "check": "320: p09 section navigation",
+      "pass": true,
+      "observation": {
+        "scroll": 320,
+        "active": "p09"
+      }
+    },
+    {
+      "check": "320: p09 no body overflow",
+      "pass": true,
+      "observation": {
+        "scroll": 320,
+        "active": "p09"
+      }
+    },
+    {
+      "check": "320: appendix-a section navigation",
+      "pass": true,
+      "observation": {
+        "scroll": 320,
+        "active": "appendix-a"
+      }
+    },
+    {
+      "check": "320: appendix-a no body overflow",
+      "pass": true,
+      "observation": {
+        "scroll": 320,
+        "active": "appendix-a"
+      }
+    },
+    {
+      "check": "320: code content remains reachable",
+      "pass": true,
+      "observation": null
+    },
+    {
+      "check": "320: cover no page overflow at 140%",
+      "pass": true,
+      "observation": 320
+    },
+    {
+      "check": "320: p01 no page overflow at 140%",
+      "pass": true,
+      "observation": 320
+    },
+    {
+      "check": "320: p09 no page overflow at 140%",
+      "pass": true,
+      "observation": 320
+    },
+    {
+      "check": "320: appendix-a no page overflow at 140%",
+      "pass": true,
+      "observation": 320
+    },
+    {
+      "check": "320: no script errors",
+      "pass": true,
+      "observation": []
+    },
+    {
+      "check": "320: mobile TOC accessible",
+      "pass": true,
+      "observation": null
+    },
+    {
+      "check": "320: mobile TOC closes after choice",
+      "pass": true,
+      "observation": null
+    },
+    {
+      "check": "360: cover fits without page overflow",
+      "pass": true,
+      "observation": {
+        "vp": 360,
+        "body": 360,
+        "main": 360,
+        "head": 125.578125
+      }
+    },
+    {
+      "check": "360: main fits screen",
+      "pass": true,
+      "observation": 360
+    },
+    {
+      "check": "360: header is compact",
+      "pass": true,
+      "observation": 125.578125
+    },
+    {
+      "check": "360: cover cards are not narrower than 100px",
+      "pass": true,
+      "observation": null
+    },
+    {
+      "check": "360: p01 section navigation",
+      "pass": true,
+      "observation": {
+        "scroll": 360,
+        "active": "p01"
+      }
+    },
+    {
+      "check": "360: p01 no body overflow",
+      "pass": true,
+      "observation": {
+        "scroll": 360,
+        "active": "p01"
+      }
+    },
+    {
+      "check": "360: p09 section navigation",
+      "pass": true,
+      "observation": {
+        "scroll": 360,
+        "active": "p09"
+      }
+    },
+    {
+      "check": "360: p09 no body overflow",
+      "pass": true,
+      "observation": {
+        "scroll": 360,
+        "active": "p09"
+      }
+    },
+    {
+      "check": "360: appendix-a section navigation",
+      "pass": true,
+      "observation": {
+        "scroll": 360,
+        "active": "appendix-a"
+      }
+    },
+    {
+      "check": "360: appendix-a no body overflow",
+      "pass": true,
+      "observation": {
+        "scroll": 360,
+        "active": "appendix-a"
+      }
+    },
+    {
+      "check": "360: code content remains reachable",
+      "pass": true,
+      "observation": null
+    },
+    {
+      "check": "360: cover no page overflow at 140%",
+      "pass": true,
+      "observation": 360
+    },
+    {
+      "check": "360: p01 no page overflow at 140%",
+      "pass": true,
+      "observation": 360
+    },
+    {
+      "check": "360: p09 no page overflow at 140%",
+      "pass": true,
+      "observation": 360
+    },
+    {
+      "check": "360: appendix-a no page overflow at 140%",
+      "pass": true,
+      "observation": 360
+    },
+    {
+      "check": "360: no script errors",
+      "pass": true,
+      "observation": []
+    },
+    {
+      "check": "360: mobile TOC accessible",
+      "pass": true,
+      "observation": null
+    },
+    {
+      "check": "360: mobile TOC closes after choice",
+      "pass": true,
+      "observation": null
+    },
+    {
+      "check": "390: cover fits without page overflow",
+      "pass": true,
+      "observation": {
+        "vp": 390,
+        "body": 390,
+        "main": 390,
+        "head": 125.578125
+      }
+    },
+    {
+      "check": "390: main fits screen",
+      "pass": true,
+      "observation": 390
+    },
+    {
+      "check": "390: header is compact",
+      "pass": true,
+      "observation": 125.578125
+    },
+    {
+      "check": "390: cover cards are not narrower than 100px",
+      "pass": true,
+      "observation": null
+    },
+    {
+      "check": "390: p01 section navigation",
+      "pass": true,
+      "observation": {
+        "scroll": 390,
+        "active": "p01"
+      }
+    },
+    {
+      "check": "390: p01 no body overflow",
+      "pass": true,
+      "observation": {
+        "scroll": 390,
+        "active": "p01"
+      }
+    },
+    {
+      "check": "390: p09 section navigation",
+      "pass": true,
+      "observation": {
+        "scroll": 390,
+        "active": "p09"
+      }
+    },
+    {
+      "check": "390: p09 no body overflow",
+      "pass": true,
+      "observation": {
+        "scroll": 390,
+        "active": "p09"
+      }
+    },
+    {
+      "check": "390: appendix-a section navigation",
+      "pass": true,
+      "observation": {
+        "scroll": 390,
+        "active": "appendix-a"
+      }
+    },
+    {
+      "check": "390: appendix-a no body overflow",
+      "pass": true,
+      "observation": {
+        "scroll": 390,
+        "active": "appendix-a"
+      }
+    },
+    {
+      "check": "390: code content remains reachable",
+      "pass": true,
+      "observation": null
+    },
+    {
+      "check": "390: cover no page overflow at 140%",
+      "pass": true,
+      "observation": 390
+    },
+    {
+      "check": "390: p01 no page overflow at 140%",
+      "pass": true,
+      "observation": 390
+    },
+    {
+      "check": "390: p09 no page overflow at 140%",
+      "pass": true,
+      "observation": 390
+    },
+    {
+      "check": "390: appendix-a no page overflow at 140%",
+      "pass": true,
+      "observation": 390
+    },
+    {
+      "check": "390: no script errors",
+      "pass": true,
+      "observation": []
+    },
+    {
+      "check": "390: mobile TOC accessible",
+      "pass": true,
+      "observation": null
+    },
+    {
+      "check": "390: mobile TOC closes after choice",
+      "pass": true,
+      "observation": null
+    },
+    {
+      "check": "600: cover fits without page overflow",
+      "pass": true,
+      "observation": {
+        "vp": 600,
+        "body": 600,
+        "main": 600,
+        "head": 130.078125
+      }
+    },
+    {
+      "check": "600: main fits screen",
+      "pass": true,
+      "observation": 600
+    },
+    {
+      "check": "600: header is compact",
+      "pass": true,
+      "observation": 130.078125
+    },
+    {
+      "check": "600: cover cards are not narrower than 100px",
+      "pass": true,
+      "observation": null
+    },
+    {
+      "check": "600: p01 section navigation",
+      "pass": true,
+      "observation": {
+        "scroll": 600,
+        "active": "p01"
+      }
+    },
+    {
+      "check": "600: p01 no body overflow",
+      "pass": true,
+      "observation": {
+        "scroll": 600,
+        "active": "p01"
+      }
+    },
+    {
+      "check": "600: p09 section navigation",
+      "pass": true,
+      "observation": {
+        "scroll": 600,
+        "active": "p09"
+      }
+    },
+    {
+      "check": "600: p09 no body overflow",
+      "pass": true,
+      "observation": {
+        "scroll": 600,
+        "active": "p09"
+      }
+    },
+    {
+      "check": "600: appendix-a section navigation",
+      "pass": true,
+      "observation": {
+        "scroll": 600,
+        "active": "appendix-a"
+      }
+    },
+    {
+      "check": "600: appendix-a no body overflow",
+      "pass": true,
+      "observation": {
+        "scroll": 600,
+        "active": "appendix-a"
+      }
+    },
+    {
+      "check": "600: code content remains reachable",
+      "pass": true,
+      "observation": null
+    },
+    {
+      "check": "600: cover no page overflow at 140%",
+      "pass": true,
+      "observation": 600
+    },
+    {
+      "check": "600: p01 no page overflow at 140%",
+      "pass": true,
+      "observation": 600
+    },
+    {
+      "check": "600: p09 no page overflow at 140%",
+      "pass": true,
+      "observation": 600
+    },
+    {
+      "check": "600: appendix-a no page overflow at 140%",
+      "pass": true,
+      "observation": 600
+    },
+    {
+      "check": "600: no script errors",
+      "pass": true,
+      "observation": []
+    },
+    {
+      "check": "600: mobile TOC accessible",
+      "pass": true,
+      "observation": null
+    },
+    {
+      "check": "600: mobile TOC closes after choice",
+      "pass": true,
+      "observation": null
+    }
+  ],
+  "passed": 72,
+  "total": 72,
+  "failed": [],
+  "limitations": "Set_content checks layout, not file:// localStorage persistence or a physical mobile OS."
+}

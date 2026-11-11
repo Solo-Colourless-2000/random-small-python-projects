@@ -1,0 +1,11 @@
+TEST_GROUP=1 TEST_METHODS=35
+...................................
+----------------------------------------------------------------------
+Ran 35 tests in 18.089s
+
+OK
+127.0.0.1:12345: CLOSED/UNREACHABLE
+127.0.0.1:12345: OPEN
+Banner: OTHER SERVICE
+127.0.0.1:12345: OPEN
+Banner: (no banner within timeout)

@@ -1,0 +1,322 @@
+{
+  "1": [
+    {
+      "anchor": "if line_number == 1 and raw.startswith(\"HTTP/\"):",
+      "pieces": [
+        "line_number == 1：先頭行だけを対象にする",
+        "and：両方の条件が成り立つ必要がある",
+        "raw.startswith：HTTP/で始まるか確認する",
+        "末尾の:：条件が真なら次の字下げ行へ進む"
+      ],
+      "caution": "HTTP/で始まらないデータを無条件にHTTPステータス行とみなすわけではない。"
+    },
+    {
+      "anchor": "fields.setdefault(name.lower(), []).append(value.strip(\" \\t\"))",
+      "pieces": [
+        "name.lower()：ヘッダー名の大文字小文字を統一する",
+        "setdefault(..., [])：初登場の名前に空リストを作り、既存ならそのリストを返す",
+        "append(...)：同名ヘッダー値を消さず順番に保存する",
+        "strip(\" \\t\")：先頭末尾のスペースとタブを取り除く"
+      ],
+      "caution": "同名Set-Cookieの複数行と、ヘッダー名の重複を区別できる。"
+    },
+    {
+      "anchor": "len(nosniff) == 1 and nosniff[0].lower() == \"nosniff\"",
+      "pieces": [
+        "len(nosniff) == 1：値がちょうど1件であること",
+        "and：1件でないと右側は評価しない",
+        "nosniff[0]：先頭の値を取り出す",
+        "lower() == \"nosniff\"：大文字小文字に依存せず文字列の一致を調べる"
+      ],
+      "caution": "「存在する」ことだけをPASSとしない。"
+    }
+  ],
+  "2": [
+    {
+      "anchor": "parts = [part.strip() for part in line[len(prefix):].split(\";\")]",
+      "pieces": [
+        "line[len(prefix):]：Set-Cookie: の接頭辞を取り除くスライス",
+        "split(\";\")：セミコロンで属性部分を分ける",
+        "for part in ...：各部分へ同じ処理を行う内包表記",
+        "part.strip()：前後の空白を取った一覧を作る"
+      ],
+      "caution": "引用符つきCookieでもセミコロンを値に含められるわけではない。"
+    },
+    {
+      "anchor": "if value.startswith('\"') != value.endswith('\"') or value == '\"':",
+      "pieces": [
+        "startswith と endswith：両端の二重引用符の有無をそれぞれ真偽値で確認",
+        "!=：真偽が異なるなら片側だけ引用符がある",
+        "or：左右がそろっていても値が引用符1文字だけなら拒否",
+        "raise：不正値を後続解析に渡さず例外にする"
+      ],
+      "caution": "引用符を勝手に補って解析してはいけない。"
+    },
+    {
+      "anchor": "secure_present = \"secure\" in attrs",
+      "pieces": [
+        "\"secure\"：属性名を表す文字列定数",
+        "in attrs：辞書attrsにキーが存在するか調べる",
+        "=：得られた真偽値をsecure_presentへ代入",
+        "属性が存在するかと、値の書き方が適切かは別に扱う"
+      ],
+      "caution": "Secure=0でもブラウザーはSecure属性が存在すると扱う場合がある。"
+    }
+  ],
+  "3": [
+    {
+      "anchor": "socket.create_connection((HOST, port), timeout=0.5)",
+      "pieces": [
+        "socket.create_connection：TCP接続を試みる標準ライブラリの関数",
+        "(HOST, port)：IPアドレスとポートの組（タプル）",
+        "timeout=0.5：接続待機上限の秒数をキーワード引数で設定",
+        "with：取得したソケットをスコープ終了時に閉じる"
+      ],
+      "caution": "ループバック固定でありネット全体を探索する道具ではない。"
+    },
+    {
+      "anchor": "banner = reply.decode(\"ascii\", errors=\"replace\").strip() if reply else",
+      "pieces": [
+        "reply：recvで得たbytes型。空のbytesなら偽",
+        "reply.decode：ASCIIで表示用のstrにする",
+        "errors=\"replace\"：ASCIIにできないバイトを置換する",
+        "A if reply else B：受信の有無で表示文を選ぶ条件式"
+      ],
+      "caution": "バナー取得に失敗しても、TCP接続の成否は別に考える。"
+    },
+    {
+      "anchor": "thread.join(timeout=2)",
+      "pieces": [
+        "thread：デモサーバー処理のThreadオブジェクト",
+        "ドット：そのオブジェクトのメソッドを参照",
+        "join：スレッドの終了を待機",
+        "timeout=2：待機は最大2秒。終了した保証はない"
+      ],
+      "caution": "文字列のjoin（連結）と同じ語でも全く異なる処理。"
+    }
+  ],
+  "4": [
+    {
+      "anchor": "decoded = unquote(user_path, errors=\"strict\")",
+      "pieces": [
+        "user_path：外部から渡された相対パス文字列",
+        "unquote：URLパーセントエンコードを1回復号",
+        "errors=\"strict\"：不正なUTF-8を置換せず例外にする",
+        "decoded：復号結果を入れる変数"
+      ],
+      "caution": "この関数だけでファイルアクセスを安全にできるわけではない。"
+    },
+    {
+      "anchor": "target = (base / decoded).resolve(strict=True)",
+      "pieces": [
+        "base / decoded：基準パスにユーザー入力を結合",
+        "(...)：結合したPathオブジェクトに対してメソッドを呼ぶ",
+        "resolve(strict=True)：実体パスを求め、存在しない対象は例外にする",
+        "target：これから読む候補ファイルのパス"
+      ],
+      "caution": "resolveと実際のopenの間に変更が起きるTOCTOU競合には非対応。"
+    },
+    {
+      "anchor": "if mode == \"safe\" and not target.is_relative_to(base):",
+      "pieces": [
+        "mode == \"safe\"：防御モードのときにだけ判定",
+        "target.is_relative_to(base)：公開ルート配下か調べる",
+        "not：その真偽を反転",
+        "and：防御モードかつ範囲外のときだけ拒否"
+      ],
+      "caution": "unsafeも教材samplesフォルダーの外には出ない。"
+    }
+  ],
+  "5": [
+    {
+      "anchor": "with closing(sqlite3.connect(\":memory:\")) as db:",
+      "pieces": [
+        "sqlite3.connect(\":memory:\")：ディスクではなくメモリDBを作成",
+        "closing(...)：withを抜けたらcloseするための管理器",
+        "as db：接続をdbという名前で参照",
+        "末尾の:：withブロックの開始"
+      ],
+      "caution": "SQLの危険な例は実データベースへ接続しない。"
+    },
+    {
+      "anchor": "rows = db.execute(query, (name,)).fetchall()",
+      "pieces": [
+        "query：?プレースホルダーのあるSQL",
+        "(name,)：1要素タプル。コンマがなければタプルではない",
+        "db.execute(query, ...)：SQL構文と値を別々に渡す",
+        "fetchall()：検索結果をすべて取り出す"
+      ],
+      "caution": "値にSQL風の文字列が含まれてもSQL構文として連結しない。"
+    },
+    {
+      "anchor": "query = f\"SELECT username FROM accounts WHERE username = '{name}'\"",
+      "pieces": [
+        "f文字列：波括弧のnameを評価して文字列へ埋め込む",
+        "SQL文の引用符：文字列リテラルをSQL中に直接作る",
+        "{name}：ユーザー入力がSQLの一部になる",
+        "=：完成したSQL文字列をqueryへ代入"
+      ],
+      "caution": "これは比較用の危険な実装。実サービスやアプリでは決して使わない。"
+    }
+  ],
+  "6": [
+    {
+      "anchor": "if mode == \"protected\" and attempts >= LIMIT:",
+      "pieces": [
+        "mode == \"protected\"：対策モードか",
+        "attempts >= LIMIT：試行数が上限以上か",
+        "and：両方の条件を満たした場合のみ遮断",
+        "ifの本文にcontinueがあり今回のアカウントを飛ばす"
+      ],
+      "caution": "教材の上限は全体2回で、現実のIP・アカウント別レート制御ではない。"
+    },
+    {
+      "anchor": "return ACCOUNTS.get(user) == guess",
+      "pieces": [
+        "ACCOUNTS：架空ユーザー名と架空パスワードの辞書",
+        "get(user)：存在しない場合はNoneを返す",
+        "== guess：推測した文字列と等しいか比較",
+        "return：真偽値を呼び出し元へ返す"
+      ],
+      "caution": "ハッシュ化や本物の認証を行うコードではない。"
+    },
+    {
+      "anchor": "successes.append(user)",
+      "pieces": [
+        "successes：一致した架空ユーザー名の一覧",
+        "ドット：リストのappendメソッドを参照",
+        "append(user)：末尾に今回のユーザー名を追加",
+        "インデント：matchがTrueになった場合だけ実行する"
+      ],
+      "caution": "一覧に入ったことは実在アカウントへのアクセスではない。"
+    }
+  ],
+  "7": [
+    {
+      "anchor": "return encoded + \".\" + encode(sign(encoded))",
+      "pieces": [
+        "encoded：JSONのBase64URL文字列",
+        "+ \".\" +：本文と署名をピリオドで連結",
+        "sign(encoded)：教材鍵でHMAC-SHA256を計算",
+        "encode(...)：署名bytesをBase64URL文字列にする"
+      ],
+      "caution": "これはJWS/JWT規格を完全実装したものではない。"
+    },
+    {
+      "anchor": "hmac.compare_digest(sign(payload_part), decode(signature_part))",
+      "pieces": [
+        "sign(payload_part)：本文から期待するHMACを再計算",
+        "decode(signature_part)：トークン付属の署名をバイトへ戻す",
+        "compare_digest：タイミング差を抑える比較",
+        "not：一致しなければ不正と判断する"
+      ],
+      "caution": "署名一致は認可や鍵の秘密保持まで保証しない。"
+    },
+    {
+      "anchor": "user, role = payload[\"user\"], payload[\"role\"]",
+      "pieces": [
+        "payload[\"user\"]：辞書の利用者名フィールド",
+        "payload[\"role\"]：辞書の役割フィールド",
+        "左辺のカンマ：2つの変数へ順に分配するアンパック代入",
+        "次のifで型・文字種・長さを検査する"
+      ],
+      "caution": "型の検査を追加したがadminという文字列の認可まではしない。"
+    }
+  ],
+  "8": [
+    {
+      "anchor": "role = ROLES.get(actor)",
+      "pieces": [
+        "ROLES：架空アカウントの役割辞書",
+        "get(actor)：actorが存在すれば役割を返す",
+        "存在しなければNoneを返す",
+        "=：判定に使うrole変数へ代入"
+      ],
+      "caution": "未知のユーザーを既定で許可しない。"
+    },
+    {
+      "anchor": "if target[\"owner\"] == actor:",
+      "pieces": [
+        "target[\"owner\"]：対象文書の所有者を読む",
+        "== actor：要求した人と所有者を比較",
+        "if：一致するときのみ真になる",
+        "次のreturn True：所有者なら操作を許す"
+      ],
+      "caution": "実サービスでは本人確認とセッションの検証が別途必要。"
+    },
+    {
+      "anchor": "return actor in ROLES and document in DOCS and action in (\"read\", \"edit\")",
+      "pieces": [
+        "actor in ROLES：ユーザーが存在するか",
+        "document in DOCS：文書IDが存在するか",
+        "action in (...)：操作名が既知か",
+        "and：3条件すべて満たせばTrue"
+      ],
+      "caution": "unsafe例では文書ごとの所有者チェックがない。"
+    }
+  ],
+  "9": [
+    {
+      "anchor": "header_length = (ip[0] & 15) * 4",
+      "pieces": [
+        "ip[0]：IPv4ヘッダー先頭の1バイト",
+        "& 15：下位4ビットのIHLを取り出す",
+        "* 4：32ビット単位からバイト単位へ変換",
+        "=：計算したヘッダー長を保存"
+      ],
+      "caution": "IPv4の全体チェックサムなどは検査しない限定パーサー。"
+    },
+    {
+      "anchor": "source, dest = struct.unpack(\"!HH\", transport[:4])",
+      "pieces": [
+        "transport[:4]：TCP/UDPの先頭4バイト",
+        "\"!HH\"：ネットワークバイト順の16ビット符号なし整数2個",
+        "struct.unpack：バイト列を整数2個へ変換",
+        "source, dest =：送信元・宛先ポートへ分配代入"
+      ],
+      "caution": "ポート番号だけではアプリケーション層の内容は分からない。"
+    },
+    {
+      "anchor": "if int.from_bytes(ip[6:8], \"big\") & 0x3fff:",
+      "pieces": [
+        "ip[6:8]：IPv4のフラグ・フラグメント位置の2バイト",
+        "from_bytes(..., \"big\")：ネットワークバイト順で整数に変換",
+        "& 0x3fff：MFフラグと位置ビットに着目",
+        "if：分割されたパケットの詳細解析をスキップ"
+      ],
+      "caution": "分割片の再構成をしないので全通信の結論は出せない。"
+    }
+  ],
+  "10": [
+    {
+      "anchor": "header_bytes, body = data.split(b\"\\r\\n\\r\\n\", 1)",
+      "pieces": [
+        "data：ファイルから読んだbytes",
+        "b\"\\r\\n\\r\\n\"：空行を示すCRLF2組のバイト列",
+        "split(..., 1)：最初の区切り箇所で1回だけ分割",
+        "header_bytes, body =：結果をヘッダーと本文に割り当てる"
+      ],
+      "caution": "本文にも改行区切りがあっても最初の区切りだけ扱う。"
+    },
+    {
+      "anchor": "fields.setdefault(key, []).append(value.strip())",
+      "pieces": [
+        "key：小文字化したHTTPヘッダー名",
+        "setdefault(key, [])：名前ごとの値リストを用意",
+        "append(...)：同名ヘッダーの複数出現を保存",
+        "strip()：値の前後の空白類を除去する"
+      ],
+      "caution": "重複CLやTEを検出できるようにする。"
+    },
+    {
+      "anchor": "if transfers and lengths:",
+      "pieces": [
+        "transfers：Transfer-Encodingの値一覧",
+        "lengths：Content-Lengthの値一覧",
+        "and：両方が空でなければ真",
+        "後続のappend：フレーミングの競合をREVIEWとして記録"
+      ],
+      "caution": "chunked本文を復号する完全なHTTPパーサーではない。"
+    }
+  ]
+}

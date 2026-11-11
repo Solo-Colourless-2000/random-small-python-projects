@@ -1,0 +1,216 @@
+{
+  "schema_version": 1,
+  "last_completed_volume": 2,
+  "updated": "2026-11-07",
+  "comparison_rule": "Compare purpose, input, output and core behavior. Renaming a project is not a new topic. Reusing elementary syntax is expected.",
+  "known_history_scope": "The supplied reference ZIP plus the current ten projects. Other past materials were not available.",
+  "preferences": {
+    "manual_language": "Japanese",
+    "source_language": "English only; ASCII",
+    "editor": "vim",
+    "daily_time": "05:00",
+    "timezone": "Asia/Tokyo"
+  },
+  "projects": [
+    {
+      "id": "day01-01",
+      "date": "reference",
+      "title": "拡張子別ファイル集計",
+      "english": "File Extension Counter",
+      "input": "指定フォルダー",
+      "output": "拡張子ごとの件数",
+      "core": "ディレクトリ直下の走査と集計",
+      "source": "user-provided python_10_projects_day_refined.zip"
+    },
+    {
+      "id": "day01-02",
+      "date": "reference",
+      "title": "ログ内のキーワード検索",
+      "english": "Log Keyword Finder",
+      "input": "ログとキーワード",
+      "output": "一致した行と行番号",
+      "core": "テキストの部分一致検索",
+      "source": "user-provided python_10_projects_day_refined.zip"
+    },
+    {
+      "id": "day01-03",
+      "date": "reference",
+      "title": "パスワード生成",
+      "english": "Password Generator",
+      "input": "文字数",
+      "output": "ランダムなパスワード",
+      "core": "安全な乱数による文字列生成",
+      "source": "user-provided python_10_projects_day_refined.zip"
+    },
+    {
+      "id": "day01-04",
+      "date": "reference",
+      "title": "ファイルハッシュ計算",
+      "english": "File Hash Calculator",
+      "input": "ファイル",
+      "output": "SHA-256ダイジェスト",
+      "core": "ファイル内容のハッシュ計算",
+      "source": "user-provided python_10_projects_day_refined.zip"
+    },
+    {
+      "id": "day01-05",
+      "date": "reference",
+      "title": "ファイル権限確認",
+      "english": "File Permission Checker",
+      "input": "ファイル",
+      "output": "POSIXの権限情報",
+      "core": "モードビットの表示と判定",
+      "source": "user-provided python_10_projects_day_refined.zip"
+    },
+    {
+      "id": "day01-06",
+      "date": "reference",
+      "title": "IPアドレス所属判定",
+      "english": "IP Address Checker",
+      "input": "IPとネットワーク",
+      "output": "所属の可否",
+      "core": "IPアドレスとCIDRの検査",
+      "source": "user-provided python_10_projects_day_refined.zip"
+    },
+    {
+      "id": "day01-07",
+      "date": "reference",
+      "title": "URLの構成要素分解",
+      "english": "URL Analyzer",
+      "input": "URL文字列",
+      "output": "ホストやクエリ",
+      "core": "URL解析",
+      "source": "user-provided python_10_projects_day_refined.zip"
+    },
+    {
+      "id": "day01-08",
+      "date": "reference",
+      "title": "CSVログのイベント集計",
+      "english": "CSV Log Analyzer",
+      "input": "CSVログ",
+      "output": "eventごとの件数",
+      "core": "CSV列の読み取りと集計",
+      "source": "user-provided python_10_projects_day_refined.zip"
+    },
+    {
+      "id": "day01-09",
+      "date": "reference",
+      "title": "システム情報収集",
+      "english": "System Information Collector",
+      "input": "実行環境と出力先",
+      "output": "OS等を記録したJSON",
+      "core": "プラットフォーム情報の取得と保存",
+      "source": "user-provided python_10_projects_day_refined.zip"
+    },
+    {
+      "id": "day01-10",
+      "date": "reference",
+      "title": "ディレクトリのZIPバックアップ",
+      "english": "Directory Backup Tool",
+      "input": "元フォルダーと出力先",
+      "output": "ZIPアーカイブ",
+      "core": "ディレクトリの走査と圧縮",
+      "source": "user-provided python_10_projects_day_refined.zip"
+    },
+    {
+      "id": "day02-01",
+      "date": "2026-11-07",
+      "title": "気温の単位変換",
+      "english": "Temperature Converter",
+      "input": "摂氏の小数",
+      "output": "華氏の小数",
+      "core": "単位変換の式と有限値検査",
+      "source": "python_10_projects_day02_20261107_refined"
+    },
+    {
+      "id": "day02-02",
+      "date": "2026-11-07",
+      "title": "端数まで分ける割り勘",
+      "english": "Fair Bill Splitter",
+      "input": "整数の円と人数",
+      "output": "余りを分配した負担額",
+      "core": "divmodを使った1円単位の分配",
+      "source": "python_10_projects_day02_20261107_refined"
+    },
+    {
+      "id": "day02-03",
+      "date": "2026-11-07",
+      "title": "人数に合わせるレシピ",
+      "english": "Recipe Scaler",
+      "input": "作る人数と固定レシピ",
+      "output": "各材料のグラム数",
+      "core": "人数比による辞書の値の換算",
+      "source": "python_10_projects_day02_20261107_refined"
+    },
+    {
+      "id": "day02-04",
+      "date": "2026-11-07",
+      "title": "予定日までの日数",
+      "english": "Date Countdown",
+      "input": "基準日と予定日",
+      "output": "未来・当日・過去の日数",
+      "core": "date差の計算と符号による分岐",
+      "source": "python_10_projects_day02_20261107_refined"
+    },
+    {
+      "id": "day02-05",
+      "date": "2026-11-07",
+      "title": "勉強と休憩の時間割",
+      "english": "Study Block Planner",
+      "input": "開始時刻とセット数",
+      "output": "勉強と休憩の時間帯",
+      "core": "timedeltaによる予定表生成",
+      "source": "python_10_projects_day02_20261107_refined"
+    },
+    {
+      "id": "day02-06",
+      "date": "2026-11-07",
+      "title": "3問だけの単語クイズ",
+      "english": "Tiny Flashcard Quiz",
+      "input": "対話式の英単語回答",
+      "output": "正誤と正解数",
+      "core": "問題リストの出題と採点",
+      "source": "python_10_projects_day02_20261107_refined"
+    },
+    {
+      "id": "day02-07",
+      "date": "2026-11-07",
+      "title": "読みやすい文章の折り返し",
+      "english": "Text Line Wrapper",
+      "input": "幅と短文",
+      "output": "折り返された文章",
+      "core": "textwrapによる文字数基準の整形",
+      "source": "python_10_projects_day02_20261107_refined"
+    },
+    {
+      "id": "day02-08",
+      "date": "2026-11-07",
+      "title": "文字で描く点数グラフ",
+      "english": "Terminal Score Bars",
+      "input": "整数の点数列",
+      "output": "文字の横棒と平均",
+      "core": "文字列の反復による可視化",
+      "source": "python_10_projects_day02_20261107_refined"
+    },
+    {
+      "id": "day02-09",
+      "date": "2026-11-07",
+      "title": "座標で探す宝探し",
+      "english": "Coordinate Treasure Hunt",
+      "input": "対話式の座標予想",
+      "output": "方角ヒントとゲーム結果",
+      "core": "座標比較と回数付きゲームループ",
+      "source": "python_10_projects_day02_20261107_refined"
+    },
+    {
+      "id": "day02-10",
+      "date": "2026-11-07",
+      "title": "ブラウザーで見るタイルアート",
+      "english": "SVG Tile Art",
+      "input": "出力.svgのパス",
+      "output": "4×4の角丸タイル画像",
+      "core": "二重ループによる図形座標生成",
+      "source": "python_10_projects_day02_20261107_refined"
+    }
+  ]
+}

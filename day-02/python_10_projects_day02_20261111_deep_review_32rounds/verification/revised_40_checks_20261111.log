@@ -1,0 +1,249 @@
+{
+  "title": "Day02 source/manual independent auditing",
+  "python": "3.13.5",
+  "review_lenses": 40,
+  "passed": 40,
+  "failed": 0,
+  "checks": [
+    {
+      "number": 1,
+      "lens": "01 Package identity",
+      "result": "PASS",
+      "evidence": "10 expected Python sources and mandatory files; True"
+    },
+    {
+      "number": 2,
+      "lens": "02 English-only source",
+      "result": "PASS",
+      "evidence": "all project scripts are ASCII; True"
+    },
+    {
+      "number": 3,
+      "lens": "03 Syntax compilation",
+      "result": "PASS",
+      "evidence": "compile every project source; 10 compiled"
+    },
+    {
+      "number": 4,
+      "lens": "04 Module loading",
+      "result": "PASS",
+      "evidence": "all projects import without output; 10 modules loaded"
+    },
+    {
+      "number": 5,
+      "lens": "05 Standard library",
+      "result": "PASS",
+      "evidence": "imports are math/sys/datetime/textwrap/pathlib only; True"
+    },
+    {
+      "number": 6,
+      "lens": "06 Ten chapters",
+      "result": "PASS",
+      "evidence": "all 20 chapter IDs including 10 projects; True"
+    },
+    {
+      "number": 7,
+      "lens": "07 Forty steps",
+      "result": "PASS",
+      "evidence": "4 lessons in each of 10 projects; True"
+    },
+    {
+      "number": 8,
+      "lens": "08 Complete source consistency",
+      "result": "PASS",
+      "evidence": "source files and appendix snippets line-for-line; 10 complete source listings exactly match projects"
+    },
+    {
+      "number": 9,
+      "lens": "09 Stage concatenation",
+      "result": "PASS",
+      "evidence": "append four contiguous steps reproduces each source; 40 lessons concatenate into 10 exact files"
+    },
+    {
+      "number": 10,
+      "lens": "10 Every line guided",
+      "result": "PASS",
+      "evidence": "syntax detail exists twice for each nonblank source line; True"
+    },
+    {
+      "number": 11,
+      "lens": "11 Token explanation mechanics",
+      "result": "PASS",
+      "evidence": "all syntax microscopes have paired definition entries; True"
+    },
+    {
+      "number": 12,
+      "lens": "12 Duplicate anchors",
+      "result": "PASS",
+      "evidence": "no duplicate HTML IDs; True"
+    },
+    {
+      "number": 13,
+      "lens": "13 Internal navigation",
+      "result": "PASS",
+      "evidence": "all fragment links target existing IDs; True"
+    },
+    {
+      "number": 14,
+      "lens": "14 Offline assets",
+      "result": "PASS",
+      "evidence": "no external script, CSS, image assets; True"
+    },
+    {
+      "number": 15,
+      "lens": "15 Copy controls",
+      "result": "PASS",
+      "evidence": "code-copy buttons are present; True"
+    },
+    {
+      "number": 16,
+      "lens": "16 Dark and responsive",
+      "result": "PASS",
+      "evidence": "dark color-scheme and mobile CSS; True"
+    },
+    {
+      "number": 17,
+      "lens": "17 Interactive search",
+      "result": "PASS",
+      "evidence": "search input and search script included; True"
+    },
+    {
+      "number": 18,
+      "lens": "18 Key operation hints",
+      "result": "PASS",
+      "evidence": "vim workflow and commands present; True"
+    },
+    {
+      "number": 19,
+      "lens": "19 Temperature formula",
+      "result": "PASS",
+      "evidence": "32F at 0C, -40F at -40C; True"
+    },
+    {
+      "number": 20,
+      "lens": "20 Temperature validation",
+      "result": "PASS",
+      "evidence": "NaN, infinity, out-of-range rejected; True"
+    },
+    {
+      "number": 21,
+      "lens": "21 Bill invariant",
+      "result": "PASS",
+      "evidence": "total preserved for 5 amounts x 5 people; True"
+    },
+    {
+      "number": 22,
+      "lens": "22 Bill bounds",
+      "result": "PASS",
+      "evidence": "zero people, negatives, 101 people rejected; True"
+    },
+    {
+      "number": 23,
+      "lens": "23 Recipe scaling",
+      "result": "PASS",
+      "evidence": "2,3,20 servings scale rice to 150,225,1500 g; True"
+    },
+    {
+      "number": 24,
+      "lens": "24 Recipe rejection",
+      "result": "PASS",
+      "evidence": "0,21 and noninteger rejected; True"
+    },
+    {
+      "number": 25,
+      "lens": "25 Leap-year math",
+      "result": "PASS",
+      "evidence": "2000 leap and 1900 non-leap; True"
+    },
+    {
+      "number": 26,
+      "lens": "26 Strict date text",
+      "result": "PASS",
+      "evidence": "invalid date spelling and value rejected; True"
+    },
+    {
+      "number": 27,
+      "lens": "27 Planner midnight",
+      "result": "PASS",
+      "evidence": "next day suffix when crossing midnight; True"
+    },
+    {
+      "number": 28,
+      "lens": "28 Planner breaks",
+      "result": "PASS",
+      "evidence": "exactly sets minus one breaks; True"
+    },
+    {
+      "number": 29,
+      "lens": "29 Quiz words and fairness",
+      "result": "PASS",
+      "evidence": "hints carry starting letter; mixed case accepted; True"
+    },
+    {
+      "number": 30,
+      "lens": "30 Quiz input interruption",
+      "result": "PASS",
+      "evidence": "short stream yields quit status 1; True"
+    },
+    {
+      "number": 31,
+      "lens": "31 Word wrap widths",
+      "result": "PASS",
+      "evidence": "long word split at widths 5 and 12; True"
+    },
+    {
+      "number": 32,
+      "lens": "32 Word wrap validation",
+      "result": "PASS",
+      "evidence": "empty and too long rejected; True"
+    },
+    {
+      "number": 33,
+      "lens": "33 Score bars rounding",
+      "result": "PASS",
+      "evidence": "99 gives 9 bars, 100 gives 10 bars; True"
+    },
+    {
+      "number": 34,
+      "lens": "34 Score average",
+      "result": "PASS",
+      "evidence": "average of 60,85,100 is 81.7; True"
+    },
+    {
+      "number": 35,
+      "lens": "35 Treasure invalid attempts",
+      "result": "PASS",
+      "evidence": "invalid guess does not reduce valid attempts; True"
+    },
+    {
+      "number": 36,
+      "lens": "36 Treasure direction",
+      "result": "PASS",
+      "evidence": "1 1 -> east north, then find 4 2; True"
+    },
+    {
+      "number": 37,
+      "lens": "37 SVG geometry",
+      "result": "PASS",
+      "evidence": "4x4 tiles, 17 rects and viewBox; 17 rects, 16 unique tiles, SVG namespace parsed"
+    },
+    {
+      "number": 38,
+      "lens": "38 SVG safety",
+      "result": "PASS",
+      "evidence": "no overwrite and invalid suffix refused; existing file unchanged and bad suffix refused"
+    },
+    {
+      "number": 39,
+      "lens": "39 Bundled samples",
+      "result": "PASS",
+      "evidence": "sample SVG and quiz transcript valid; SVG preview parses, quiz sample contains 3 entries"
+    },
+    {
+      "number": 40,
+      "lens": "40 Behavior case manifest",
+      "result": "PASS",
+      "evidence": "all included test specs refer to known programs; 69 test specifications cross-referenced"
+    }
+  ]
+}

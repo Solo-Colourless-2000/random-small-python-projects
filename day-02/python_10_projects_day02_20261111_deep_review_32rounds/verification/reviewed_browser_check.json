@@ -1,0 +1,32 @@
+[
+  {
+    "viewport": "1440x900",
+    "js_errors": [],
+    "chapters": 20,
+    "horizontal_overflow": false,
+    "chapter_visible": true,
+    "expanded_token_definitions": 1,
+    "search_visible": true
+  },
+  {
+    "viewport": "390x844",
+    "js_errors": [],
+    "chapters": 20,
+    "horizontal_overflow": false,
+    "chapter_visible": true,
+    "mobile_menu_open": true
+  },
+  {
+    "viewport": "320x740",
+    "js_errors": [],
+    "chapters": 20,
+    "horizontal_overflow": false,
+    "chapter_visible": true,
+    "project10_visible": true,
+    "page_scrollwidth": 320
+  },
+  {
+    "mode": "javascript_disabled",
+    "all_sections_visible": true
+  }
+]

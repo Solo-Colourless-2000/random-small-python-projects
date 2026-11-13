@@ -1,0 +1,4 @@
+From: Example Help <help@example.test>
+Reply-To: customer-service@outside.example.test
+Subject: Sample security notification
+Authentication-Results: demo.invalid; spf=pass smtp.mailfrom=example.test

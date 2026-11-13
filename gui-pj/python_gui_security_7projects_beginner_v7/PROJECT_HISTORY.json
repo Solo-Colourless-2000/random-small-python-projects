@@ -1,0 +1,78 @@
+{
+  "title": "Python cybersecurity GUI seven projects",
+  "date": "2026-11-11",
+  "revision": "v7-token-faithful-semantic-beginner-review",
+  "source_reference": "Python_GUI_セキュリティ実践7作品_全行詳細解説_36観点監査_20261111.zip (previous user-requested v6 artifact, sole revision source)",
+  "target_minutes": 680,
+  "projects": [
+    {
+      "id": "01",
+      "filename": "01_auth_log_board.py",
+      "title": "認証ログの調査ボード",
+      "minutes": 80,
+      "topic": "認証成功・失敗のCSVを読み込み、送信元IPごとの失敗回数を集計し、GUIの表で優先調査候補を探す。"
+    },
+    {
+      "id": "02",
+      "filename": "02_http_header_audit.py",
+      "title": "HTTPヘッダー監査デスク",
+      "minutes": 80,
+      "topic": "HTTPレスポンスのヘッダーを貼り付け、CSP、nosniff、Referrer-Policy、HSTS、Cookie属性の有無を整理する。"
+    },
+    {
+      "id": "03",
+      "filename": "03_firewall_rule_viewer.py",
+      "title": "ファイアウォールルール可視化",
+      "minutes": 85,
+      "topic": "簡略化したアクセス制御ルールCSVから、全世界への許可や機微なポートを確認する。IPv4/IPv6も扱う。"
+    },
+    {
+      "id": "04",
+      "filename": "04_ioc_match_console.py",
+      "title": "IOC照合コンソール",
+      "minutes": 85,
+      "topic": "IP・ドメイン・SHA-256のIOC一覧とイベントを突き合わせ、完全一致する候補を抽出する。"
+    },
+    {
+      "id": "05",
+      "filename": "05_integrity_baseline.py",
+      "title": "ファイル改変検知ボード",
+      "minutes": 100,
+      "topic": "フォルダー内のファイルをSHA-256で記録し、後から再計算して追加・削除・変更を見つける。"
+    },
+    {
+      "id": "06",
+      "filename": "06_email_header_clues.py",
+      "title": "メールヘッダーの手がかり抽出",
+      "minutes": 75,
+      "topic": "FromとReply-Toのドメイン差、Authentication-Resultsの存在などを、メールヘッダーだけから読み取る。"
+    },
+    {
+      "id": "07",
+      "filename": "07_login_throttle_lab.py",
+      "title": "ログイン試行制限シミュレーター",
+      "minutes": 75,
+      "topic": "失敗ログイン3回で30秒ロックされるモデルをGUIで再現し、時間窓と状態管理の挙動を理解する。"
+    }
+  ],
+  "extra_audit_passes": 35,
+  "source_line_explanations": 696,
+  "step_count": 28,
+  "new_behavioral_tests": 22,
+  "total_unittest_tests": 187,
+  "manual_line_explanations_verified": 696,
+  "additional_focused_checks": 35,
+  "additional_unittest_tests": 9,
+  "step_code_blocks_verified": 28,
+  "source_files_verified": 7,
+  "new_v6_handpicked_detailed_lines": 35,
+  "new_v6_distinct_audit_checks": 36,
+  "manual_filename": "Python_GUI_サイバーセキュリティ7作品_全行詳細解説マニュアル.html",
+  "v6_note": "Thirty-six distinct named audit tests, not thirty-six human cover-to-cover rereads. Old v5 numbers retained as prior history.",
+  "v7_lexical_tokens_explained": 6504,
+  "v7_focused_source_manual_checks": 42,
+  "v7_token_consistency_checks": 3,
+  "v7_worked_code_readings": 42,
+  "v7_identifier_explanations_enriched": 1000,
+  "v7_note": "Distinct audits and focused editorial examples; not a claim of 30 independent human cover-to-cover rereadings. The seven complete Python sources are preserved byte-for-byte."
+}

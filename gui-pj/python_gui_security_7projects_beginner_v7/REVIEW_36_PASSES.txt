@@ -1,0 +1,37 @@
+AUTOMATED WHOLE-ARTIFACT REVIEW: 36 FRESH PASSES
+01. PASS | 7 independently runnable Python projects
+02. PASS | project paths unique
+03. PASS | all source code ASCII
+04. PASS | all source parses as Python
+05. PASS | guarded GUI entrypoints
+06. PASS | event loop in all GUI projects
+07. PASS | no source network libraries
+08. PASS | source files reasonably small
+09. PASS | 17 navigable chapters
+10. PASS | 28 code-building steps
+11. PASS | 7 appendix full source excerpts
+12. PASS | appendices exactly match sources
+13. PASS | step excerpts exactly reconstruct source
+14. PASS | every program has annotations
+15. PASS | more than 90 beginner line explanations
+16. PASS | seven data-flow diagrams in prose
+17. PASS | seven three-way lab tables
+18. PASS | seven beginner pitfalls sections
+19. PASS | 7 GUI screenshots linked
+20. PASS | images exist as PNG data
+21. PASS | image accessibility alt text
+22. PASS | no remote script/stylesheet dependencies
+23. PASS | dark-mode interface is explicit
+24. PASS | all chapter targets unique
+25. PASS | all local image paths resolve
+26. PASS | input sample auth events
+27. PASS | auth fail tally sample
+28. PASS | sample firewall review count
+29. PASS | sample IOC match count
+30. PASS | sample file baseline count
+31. PASS | sample mail mismatch clue
+32. PASS | throttle locks on third failed attempt
+33. PASS | project time 580 min
+34. PASS | overall schedule 680 min
+35. PASS | manual browser controls present
+36. PASS | review revision metadata and tests exist

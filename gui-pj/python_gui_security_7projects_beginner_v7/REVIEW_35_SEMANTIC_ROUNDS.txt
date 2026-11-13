@@ -1,0 +1,36 @@
+01. PASS | Project 01 | Six sample log events are parsed | snapshot 68f5dd9920cc
+02. PASS | Project 01 | Three failures remain after a success | snapshot 68f5dd9920cc
+03. PASS | Project 01 | Searching bob changes only visibility | snapshot 68f5dd9920cc
+04. PASS | Project 01 | Invalid IPv4 is rejected | snapshot 68f5dd9920cc
+05. PASS | Project 01 | CSV bytes and row bounds are explicit | snapshot 68f5dd9920cc
+06. PASS | Project 02 | Large positive HSTS age cannot crash int conversion | snapshot 68f5dd9920cc
+07. PASS | Project 02 | Large zero HSTS age does not appear positive | snapshot 68f5dd9920cc
+08. PASS | Project 02 | Conflicting HSTS directives trigger review | snapshot 68f5dd9920cc
+09. PASS | Project 02 | Blank pasted header text is input error | snapshot 68f5dd9920cc
+10. PASS | Project 02 | SameSite None without Secure triggers review | snapshot 68f5dd9920cc
+11. PASS | Project 03 | Sample contains five rows and three review candidates | snapshot 68f5dd9920cc
+12. PASS | Project 03 | Unaligned CIDR fails, rather than silently broadening source | snapshot 68f5dd9920cc
+13. PASS | Project 03 | Aligned /24 network is accepted | snapshot 68f5dd9920cc
+14. PASS | Project 03 | Port 65536 is rejected before policy review | snapshot 68f5dd9920cc
+15. PASS | Project 03 | Sample IPv6 broad allow remains review candidate | snapshot 68f5dd9920cc
+16. PASS | Project 04 | All three expected IOC matches appear | snapshot 68f5dd9920cc
+17. PASS | Project 04 | Zone-qualified IPv6 is rejected as IOC | snapshot 68f5dd9920cc
+18. PASS | Project 04 | Trailing domain dot and case are normalized | snapshot 68f5dd9920cc
+19. PASS | Project 04 | Short SHA-256 is rejected | snapshot 68f5dd9920cc
+20. PASS | Project 04 | IOC CSV input has a bounded file size | snapshot 68f5dd9920cc
+21. PASS | Project 05 | Integrity sample contains two direct files | snapshot 68f5dd9920cc
+22. PASS | Project 05 | Changed digest is classified as MODIFIED | snapshot 68f5dd9920cc
+23. PASS | Project 05 | Symlink is excluded from snapshots | snapshot 68f5dd9920cc
+24. PASS | Project 05 | Over-five-MiB file causes a clear failure | snapshot 68f5dd9920cc
+25. PASS | Project 05 | Comparisons distinguish addition and removal | snapshot 68f5dd9920cc
+26. PASS | Project 06 | Sample From/Reply-To discrepancy yields REVIEW | snapshot 68f5dd9920cc
+27. PASS | Project 06 | Duplicate From never produces same-domain SEEN | snapshot 68f5dd9920cc
+28. PASS | Project 06 | Duplicate Reply-To never produces same-domain SEEN | snapshot 68f5dd9920cc
+29. PASS | Project 06 | Authentication-Results is not treated as verified fact | snapshot 68f5dd9920cc
+30. PASS | Project 06 | Single valid From and Reply-To same-domain is SEEN | snapshot 68f5dd9920cc
+31. PASS | Project 07 | Third failure triggers lock_until at t=30 | snapshot 68f5dd9920cc
+32. PASS | Project 07 | Lock is blocked at t=20 and released at t=30 | snapshot 68f5dd9920cc
+33. PASS | Project 07 | Failure falls out of the 60 second time window | snapshot 68f5dd9920cc
+34. PASS | Project 07 | Negative time advance is rejected | snapshot 68f5dd9920cc
+35. PASS | Project 07 | No user credentials or remote traffic in the simulation | snapshot 68f5dd9920cc
+35 / 35 thematic semantic checks PASSED

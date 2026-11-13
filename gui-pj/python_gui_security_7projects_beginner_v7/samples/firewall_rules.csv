@@ -1,0 +1,6 @@
+protocol,port,source,action
+TCP,22,0.0.0.0/0,ALLOW
+TCP,443,0.0.0.0/0,ALLOW
+TCP,3389,10.10.0.0/16,ALLOW
+UDP,53,::/0,DENY
+TCP,any,::/0,ALLOW

@@ -1,0 +1,31 @@
+{
+  "context_token_corrections": 1963,
+  "distinct_lines_corrected": 612,
+  "verified_reading_examples": 42,
+  "by_token": {
+    "and": 12,
+    "(": 472,
+    "get": 12,
+    "set": 8,
+    "*": 5,
+    ":": 205,
+    "len": 31,
+    "is": 9,
+    "in": 75,
+    "not": 13,
+    "if": 6,
+    "|": 2,
+    "{": 42,
+    "None": 10,
+    "for": 31,
+    "]": 83,
+    "=": 260,
+    "from": 2,
+    "}": 42,
+    "[": 82,
+    "as": 12,
+    "or": 30,
+    "ValueError": 50,
+    ")": 469
+  }
+}

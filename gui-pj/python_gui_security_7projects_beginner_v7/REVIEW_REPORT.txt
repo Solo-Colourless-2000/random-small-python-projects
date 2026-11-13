@@ -1,0 +1,22 @@
+PYTHON CYBER GUI 7 PROJECTS - V5 EDITORIAL RECHECK
+Source: cyber_gui_python_7projects_20261110_deep_review_35plus.zip
+
+Changes made:
+- All 28 STEP captions and boundaries repaired; new matching line-by-line explanations: 136.
+- HTTP Cookie duplicate/malformed attribute checks added.
+- File integrity check re-reads file metadata after hashing; not atomic.
+- Email method names corrected; new pedagogical explanations in all 7 projects.
+- 150 missing search destination IDs repaired.
+
+Verified from actual execution:
+- unittest discovery: 106 tests PASS.
+- newly authored focused cases: 35/35 PASS (not previous review check reuse).
+- prior semantic review: 35/35 PASS.
+- prior 36-criterion review: 36/36 PASS.
+- prior 28-criterion review: 28/28 PASS.
+- Tk GUI start 7/7 PASS; button interactions 7/7 PASS.
+- Chromium 17 chapters and 7 screenshots at 1440, 768, 390 widths; no JS exception or document-wide horizontal overflow detected.
+- All source code and 28 STEP text exactly match the delivered .py files.
+- 136 line-by-line explanations reference actual code lines.
+
+Caveat: tests cannot prove a tool is production-secure, and case counts do not replace human editorial judgment. The named code defects and manual errors were inspected and corrected individually. Detailed descriptions in EDITORIAL_V5.md.

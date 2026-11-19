@@ -1,3 +1,0 @@
-Context-specific identifier label replacements: 997
-Remaining generic lexical elements: {'"': 1, 'add': 1, ' files/entries shown; all hashes computed with SHA-256.': 1}
-Final follow-up: the remaining 3 context labels (f-string fragments and set.add) were also replaced with specific explanations. Remaining original generic placeholders: 0.

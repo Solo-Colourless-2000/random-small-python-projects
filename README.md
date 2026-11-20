@@ -1,6 +1,6 @@
 # Small Python Projects for Beginners
 
-A collection of small Python projects for myself learning python programming.
+A collection of small Python projects that I'm working on to learn python programming.
 
 The projects cover some simple stuff such as file handling, networking, basic utilities.
 
